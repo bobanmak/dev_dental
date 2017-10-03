@@ -1,5 +1,5 @@
 {
-  "name": "dev_dental",
+  "name": "test-project",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -30,7 +30,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/dev_dental.git"
+    "url": "git://github.com/anonymous node/sails user/test-project.git"
   },
   "author": "anonymous node/sails user",
   "license": ""
