@@ -1,5 +1,5 @@
 {
-  "name": "test-project",
+  "name": "dev_dental",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
@@ -23,14 +23,14 @@
     "sails": "~0.12.14",
     "sails-disk": "~0.10.9"
   },
-"scripts": {
-  "start": "sails lift",
-  "debug": "node debug app.js"
-},
+  "scripts": {
+    "debug": "node debug app.js",
+    "start": "node app.js"
+  },
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/test-project.git"
+    "url": "git://github.com/anonymous node/sails user/dev_dental.git"
   },
   "author": "anonymous node/sails user",
   "license": ""
