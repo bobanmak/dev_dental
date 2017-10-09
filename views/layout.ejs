@@ -11,6 +11,21 @@
     <!--STYLES END-->
     <script src="/js/three.js"></script>
     
+    <style> 
+        .canvas {
+          font-family: Monospace;
+          background-color: #fff;
+          color: #fff;
+          margin-left: !important auto;
+          padding: !important auto;
+          overflow: hidden;
+        }
+        #login {
+          width:220px;  
+        }
+       
+      </style>
+
      </head>
 
   <body>
@@ -26,12 +41,18 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
-              <!--<li class="nav-item">
-                <a class="nav-link" href="/notes/add">Add Notes</a>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Calender</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/notes/list">View Notes</a>
-              </li>-->
+                <a class="nav-link" href="/user/view">Patiens</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Personal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Services</a>
+              </li>
             </ul>
           </div>
         </nav>
@@ -50,6 +71,7 @@
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/MTLLoader.js"></script>
     <script src="/js/OBJLoader.js"></script>
     <script src="/js/three.js"></script>
     <!--SCRIPTS END-->

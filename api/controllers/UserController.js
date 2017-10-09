@@ -16,5 +16,15 @@ module.exports = {
             });
 
     },
+    singleview: function(req,res){
+        User.findOne({id:req.params.id}).exec(function(err,user){
+            if(err){
+                res.send(500, {error:"DB Error"});
+            }
+
+            res.view("singleview",{user:user});
+        });
+
+    },
 };
 
