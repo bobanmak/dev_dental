@@ -16,6 +16,11 @@ module.exports = {
         },
         description: {
             type: "text"
+        },
+        treatment_step:{
+            collection:'treatment_steps',
+            via:'step_id'
         }
+
     }
 };

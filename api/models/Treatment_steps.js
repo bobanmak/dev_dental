@@ -13,20 +13,18 @@ module.exports = {
     autoUpdatedAt: false,
     attributes: {
         treatment_id: {
-            type: "integer",
-            unique: true,
-            model: 'visit'
+            model: 'treatment'
         },
         step_id: {
-            type: "integer",
-            unique:true,
             model:'step'
 
         },
         step_order: {
-            type: "integer",
-            unique: true,
-            model: 'problem_detected'
+            type: 'integer'
+        },
+        visit_steps:{
+            collection:'visit_steps',
+            via:'treatment_steps_id'
         }
     }
 };

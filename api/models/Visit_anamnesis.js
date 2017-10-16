@@ -10,14 +10,19 @@ module.exports = {
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
-    autoPK: false,
+    autoPk:false,
     attributes: {
         anamnesis_anamnesis_id: {
-
+            primaryKey:true,
+            unique:true,
+            model: 'anamnesis'
         },
         anamnesis_catalog_id: {
-
-
+            primaryKey:true,
+            unique:true,
+            model: 'anamnesis_catalog'
+           /* primaryKey:true,
+           model: 'anamnesis_catalog'*/
         }
 
     }

@@ -1,13 +1,13 @@
 /**
- * PatientController
+ * User_has_roleController
  *
- * @description :: Server-side logic for managing patients
+ * @description :: Server-side logic for managing user_has_roles
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
     create: function (req, res) {
-        Patient.create({
+        User_has_role.create({
             id:'3',
             NAME: 'martin',
             surname: 'mileski',
@@ -24,17 +24,7 @@ module.exports = {
                 return res.ok();
             });
     },
-    Populate: function (req, res) {
-        Patient.find()
-            .populate('visits')
-            .exec(function (err, users) {
-                if (err) {
-                    return res.send(err)
-                } else {
-                    return res.send(users)
-                }// handle error
-
-            });
+    bye: function (req, res) {
+        return res.redirect('http://www.sayonara.com');
     }
 };
-

@@ -1,22 +1,25 @@
 /**
- * Problem_catalog.js
+ * Role.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-    tableName: 'problem_catalog',
+
+    tableName: 'role',
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
     attributes: {
-        problem_name: {
-            type: "text"
+        role_name: {
+            type: "string"
         },
-        problem_detected:{
-            collection:"problem_detected",
-            via:'problem_catalog_id'
+        user_has_role:{
+            collection: 'user_has_role',
+            via: 'role_id'
         }
+
     }
 };
+

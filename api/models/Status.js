@@ -1,22 +1,27 @@
 /**
- * Problem_catalog.js
+ * Status.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-    tableName: 'problem_catalog',
+
+    tableName: 'status',
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
     attributes: {
-        problem_name: {
-            type: "text"
+        status_name: {
+            type: "string"
         },
-        problem_detected:{
-            collection:"problem_detected",
-            via:'problem_catalog_id'
+        is_user_working: {
+            type: "string"
+        },
+        user_has_status:{
+            collection: 'user_has_status',
+            via: 'status_id'
         }
+
     }
 };

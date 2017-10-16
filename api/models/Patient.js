@@ -11,7 +11,6 @@ module.exports = {
     autoCreatedAt: false,
     autoUpdatedAt: false,
     autoPK: false,
-
     attributes: {
         id:{
             type: 'integer',
@@ -40,6 +39,10 @@ module.exports = {
         visits: {
             collection: 'visit',
             via: 'patient_id'
+        },
+        documents:{
+            collection:'document',
+            via:'patient_id'
         }
     },
 

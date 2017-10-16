@@ -18,9 +18,19 @@ module.exports = {
             type: "text"
         },
         final_step_id: {
-            type: "integer",
-            unique: true,
             model: 'step'
+        },
+        selected_treatment:{
+            colection:'problem_detected',
+            via:'selected_treatment_id'
+        },
+        suggested_treatment:{
+            colection:'problem_detected',
+            via:'suggested_treatment_id'
+        },
+        treatment_steps:{
+            collection:'treatment_steps',
+            via:'treatment_id'
         }
     }
 };

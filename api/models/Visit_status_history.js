@@ -1,22 +1,27 @@
 /**
- * Problem_catalog.js
+ * Visit_status_history.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-    tableName: 'problem_catalog',
+    tableName: 'visit_status_history',
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
     attributes: {
-        problem_name: {
-            type: "text"
+        status_time: {
+            type: 'datetime'
         },
-        problem_detected:{
-            collection:"problem_detected",
-            via:'problem_catalog_id'
+        visit_status_id: {
+            model: 'visit_status'
+        },
+        visit_id: {
+            model: 'visit'
         }
-    }
+    },
+
+
+
 };

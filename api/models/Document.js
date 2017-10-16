@@ -1,22 +1,25 @@
 /**
- * Problem_catalog.js
+ * Document.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
-    tableName: 'problem_catalog',
+    tableName: 'document',
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
     attributes: {
-        problem_name: {
+        description: {
             type: "text"
         },
-        problem_detected:{
-            collection:"problem_detected",
-            via:'problem_catalog_id'
+        location:{
+          type:'string'
+        },
+        patient_id:{
+          model:'patient'
         }
     }
 };
+

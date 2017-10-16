@@ -15,8 +15,12 @@ module.exports = {
             type: 'string'
         },
         anamnesis_type_id: {
-            unique:true,
             model:'anamnesis_type'
+        },
+        anamnesis_catalog:{
+            collection: 'anamnesis',
+            via: 'anamnesis_catalog',
+            through: 'visit_anamnesis'
         }
     }
 };

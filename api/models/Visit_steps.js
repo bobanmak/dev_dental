@@ -13,19 +13,13 @@ module.exports = {
     autoUpdatedAt: false,
     attributes: {
         visit_id: {
-            type: "integer",
-            unique: true,
             model: 'visit'
         },
         treatment_steps_id: {
-            type: "integer",
-            unique: true,
             model: 'treatment_steps'
 
         },
         problem_detected_id: {
-            type: "integer",
-            unique: true,
             model: 'problem_detected'
         },
         step_time: {

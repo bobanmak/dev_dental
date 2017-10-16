@@ -13,29 +13,23 @@ module.exports = {
     autoUpdatedAt: false,
     attributes: {
         tooth_id: {
-            type: "integer",
-            unique: true,
             model: 'tooth'
         },
         problem_catalog_id: {
-            type: "integer",
-            unique: true,
             model: 'problem_catalog'
         },
         visit_id: {
-            type: "integer",
-            unique: true,
             model: 'visit'
         },
         suggested_treatment_id: {
-            type:'integer',
-            unique: true,
             model: 'treatment'
         },
         selected_treatment_id: {
-            type:"integer",
-            unique: true,
             model: 'treatment'
+        },
+        visit_steps:{
+            collection:'visit_steps',
+            via:'problem_detected_id'
         }
 
     }
