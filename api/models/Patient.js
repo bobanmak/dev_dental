@@ -10,7 +10,15 @@ module.exports = {
     connection: 'mysql',
     autoCreatedAt: false,
     autoUpdatedAt: false,
+    autoPK: false,
+
     attributes: {
+        id:{
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+        },
         NAME: {
             type: 'string'
         },

@@ -16,6 +16,10 @@ module.exports = {
         },
         tooth:{
             type: "string"
+        },
+        tooth_problems:{
+            collection:'problem_detected',
+            via:'tooth_id'
         }
     }
 };
