@@ -15,24 +15,22 @@ module.exports = {
         user_name: {
             type: "string"
         },
-        email:{
+        email: {
             type: "email"
         },
-        password:{
-            type:'string'
+        password: {
+            type: 'string'
         },
-        password_salt:{
-            type:'string'
+        password_salt: {
+            type: 'string'
         },
-        password_hash_algorithm:{
-          type:'string'
-        },
-        user_status:{
+
+        user_status: {
             collection: 'user_has_status',
             via: 'user_account_id'
         },
-        user_role:{
-            collection: 'user_has_status',
+        user_role: {
+            collection: 'user_has_role',
             via: 'user_account_id'
         }
 
