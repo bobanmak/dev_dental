@@ -1,25 +1,30 @@
 /**
  * User_accountController
  *
- * @description :: Server-side logic for managing user_accounts
+ * @description :: Server-side logic for managing user_has_statuses
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var jwt = require('jsonwebtoken');
 
 module.exports = {
-    view: function (req, res) {
-        User_account.find(1)
-            .populate('user_role')
-            .exec(function (err, users) {
-                if (err) {
-                    return res.send(err);
-                } else {
-                    return res.send(users);
-                }
-            });
-    }
-   /* create:function (req, res) {
+    index:function(req,res){
+        const params = req.params.all();
+        const jwttoken = params.utoken;
+        var decoded = jwt.verify(jwttoken, sails.config.api_config.secret_key);
+        User_account.find({id:decoded.user_id})
+            .exec(function(err, users) {
+                if(err) res.send(err)
 
-        return res.send('oks');
-    }*/
+                const  acc={
+                    user_id:users[0].id,
+                    role_id:decoded.role_id,
+                    username:users[0].user_name,
+                    email:users[0].email
+                };
+                return res.send(acc);
+                    });
+
+    }
+
 };
 

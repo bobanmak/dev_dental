@@ -6,25 +6,47 @@
  */
 
 module.exports = {
-    create: function (req, res) {
-        User_has_role.create({
-            id:'3',
-            NAME: 'martin',
-            surname: 'mileski',
-            identification_number: 'aa3dfsfdf',
-            address:'sirma vojvoda',
-            phone:'23',
-            mail:'test@test.com'
-
-        })
-            .exec(function(err, pet) {
-                if (err) { return res.serverError(err); }
-
-                sails.log(pet);
-                return res.ok();
+    index:function(req,res){
+        User_has_role
+            .find()
+            .exec((err,users_role)=> {
+                if(err){ return res.send(err)};
+                return res.send(users_role);
             });
+        },
+    create:function(req,res){
+            const params= req.params.all();
+            User_has_role
+                .create(params)
+                .exec((err,result)=>{
+                if(err){
+                    res.status(401);
+                    return res.send({
+                        status:res.status,
+                        message: err
+                    })
+                }
+                res.status(201);
+            return res.send({
+                status:res.status,
+                message:"User role succesfully added"
+            });
+        })
     },
-    bye: function (req, res) {
-        return res.redirect('http://www.sayonara.com');
+
+    update:function(req,res){
+        const params= req.params.all();
+
+        if (!params.id) return res.send("No id specified.",500);
+
+        User_has_role
+            .update(params.id , {user_account_id : params.user_account_id,role_id: params.role_id })
+            .exec( function afterwards(err, updated)  {
+            return res.send(updated)
+        })
+    },
+    destroy:function(req,res){
+
     }
+
 };

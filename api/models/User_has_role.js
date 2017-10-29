@@ -26,9 +26,9 @@ module.exports = {
             type:'integer',
             model:'role'
         },
-        anamnesis:{
-            collection:'anamnesis',
-            via:'user_anamnesis_id'
+        visits:{
+            collection:'visit',
+            via:'dentist_id'
         }
 
     }

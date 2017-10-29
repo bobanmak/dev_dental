@@ -20,8 +20,7 @@
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
-module.exports.routes = {
-
+var routes = {
     /***************************************************************************
      *                                                                          *
      * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
@@ -32,14 +31,10 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    '/': {
-        view: 'homepage',
-
+    // the default sails homepage when creating a new app
+    '/sailshomepage': {
+        view: 'sailshomepage'
     },
-    'post /signup': 'AuthController.signUp',
-    'post /login': 'AuthController.login',
-    '/logout': 'AuthController.logout',
-
 
     /***************************************************************************
      *                                                                          *
@@ -51,4 +46,22 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
+    'post /api/v1/register': 'AuthController.register',
+    'post /api/v1/login': 'AuthController.login',
+    'post /api/v1/logout': 'AuthController.logout',
+    'get /api/v1/myAccount': 'User_accountController.index',
+
 };
+
+// the same app will be rendered at all these routes
+var indexRoutes = ['/',
+    '/login',
+    '/my-account',
+    '/register',
+    '/page1',
+    '/page2'];
+indexRoutes.forEach(function (r) {
+    routes['GET ' + r] = 'IndexController.index';
+});
+
+module.exports.routes = routes;

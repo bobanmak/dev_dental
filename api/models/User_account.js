@@ -24,7 +24,6 @@ module.exports = {
         password_salt: {
             type: 'string'
         },
-
         user_status: {
             collection: 'user_has_status',
             via: 'user_account_id'
