@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 import Layout from './Layout';
 
@@ -22,9 +22,7 @@ export default class IndexPage extends Component {
 					<div>
 						<Link to="/page2">Page 2</Link>
 					</div>
-					<div>
-						<a href="sailshomepage">Sails default page</a>
-					</div>
+
 				</div>
 			</Layout>);
 	}

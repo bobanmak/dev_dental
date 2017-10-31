@@ -14,18 +14,22 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 
+
+
 class MyAccountComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {  open: ""};
 
     }
-    componentWillMount(){
-        //this.getCookie('udata');
-        console.log(this.props);
+
+    componentDidMount(){
+        //const parsed = JSON.parse(this.props.localData);
+        //this.props.myAccount(token);
     }
 
     render() {
+
 
         return (
             <div className="container" >
@@ -33,13 +37,8 @@ class MyAccountComponent extends Component {
             <Tabs>
             <Tab label="My Account"  >
             <div>
-            <h2 style={styles.headline}>Controllable Tab B</h2>
-        <p>
-        This is another example of a controllable tab. Remember, if you
-            use controllable Tabs, you need to give all of your tabs values or else
-        you wont be able to select them.
-        </p>
-        </div>
+                <SingleAccount />
+            </div>
         </Tab>
             <Tab label="Add Dentist" />
             <Tab label="Edit Dentist Role"  disabled/>
@@ -51,8 +50,9 @@ class MyAccountComponent extends Component {
     }
 
 }
-function mapStateToProps({localData}){
-    return {localData}
+function mapStateToProps({localData,myAccount}){
+    return {localData,myAccount}
 }
+
 
 export default connect(mapStateToProps,{myAccount,LocalAuthCheck})(MyAccountComponent)

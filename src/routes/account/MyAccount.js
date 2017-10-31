@@ -6,7 +6,9 @@ export default class MyAccount extends Component {
         super(props);
 
     }
-
+    componentDidMount(){
+        console.log(this.props);
+    }
     render() {
         return (
             <Layout title="MyAccountComponent page">

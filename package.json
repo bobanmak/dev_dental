@@ -1,7 +1,7 @@
 {
-	"name": "sails-react-redux-boilerplate",
+	"name": "dev-dental",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.0.1",
 	"description": "a Sails application",
 	"keywords": [],
 	"dependencies": {
@@ -41,6 +41,7 @@
 		"react-hot-loader": "^3.0.0-beta.6",
 		"react-redux": "^5.0.6",
 		"react-router": "^3.0.0",
+		"react-router-dom": "^4.2.2",
 		"react-tap-event-plugin": "^2.0.1",
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.1",
@@ -91,6 +92,6 @@
 		"type": "git",
 		"url": ""
 	},
-	"author": "jaxcore",
+	"author": "Kristijan Risteski ",
 	"license": ""
 }
