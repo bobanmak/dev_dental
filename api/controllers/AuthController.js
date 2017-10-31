@@ -99,7 +99,7 @@ module.exports = {
                                     }
                                     User_has_role.create(roles, function (err, roles) {
                                         if (err){
-                                            return res.send({message:err})
+                                            return res.negotiate(err);
                                         }
 
                                         const response_message = {
