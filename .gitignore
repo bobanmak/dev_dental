@@ -40,7 +40,7 @@
 ################################################
 
 config/local.js
-
+config/connections.js
 
 
 
@@ -118,3 +118,5 @@ nbproject
 .node_history
 test/client/__snapshots__
 public/build/
+/config/connections.js
+/package.json
