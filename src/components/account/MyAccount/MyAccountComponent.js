@@ -4,6 +4,7 @@ import {myAccount} from '../../../actions/account_actions';
 import {browserHistory} from 'react-router';
 import {getCookie} from '../../../utils/cookies'
 import {LocalAuthCheck} from '../../../actions/localData_actions';
+
 import SingleAccount from './SingleAccount';
 import AddDoctor from './AddDoctor';
 // material-UI and styles
@@ -32,20 +33,11 @@ class MyAccountComponent extends Component {
 
 
         return (
-            <div className="container" >
-                <Paper className={styles.myAccount} zDepth={2}>
-            <Tabs>
-            <Tab label="My Account"  >
-            <div>
-                <SingleAccount />
-            </div>
-        </Tab>
-            <Tab label="Add Dentist" />
-            <Tab label="Edit Dentist Role"  disabled/>
-            </Tabs>
-                </Paper>
-
-            </div>
+                <div className="myAccount">
+                    <Paper className={styles.myAccount} zDepth={2}>
+                        adadasd
+                    </Paper>
+                </div>
         );
     }
 
@@ -55,4 +47,4 @@ function mapStateToProps({localData,myAccount}){
 }
 
 
-export default connect(mapStateToProps,{myAccount,LocalAuthCheck})(MyAccountComponent)
+export default connect(mapStateToProps,{myAccount,LocalAuthCheck})(MyAccountComponent);

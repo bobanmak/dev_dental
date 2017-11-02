@@ -19,22 +19,24 @@ import MyAccount from './routes/account/MyAccount';
 import NotFound from './routes/NotFound';
 
 //const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
-const createStoreWithMiddleware = createStore(
-    reducers,
-    // applyMiddleware() tells createStore() how to handle middleware
-    applyMiddleware(promise)
-)
-
-
+const createStoreWithMiddleware = createStore(reducers, applyMiddleware(promise));
 
 export default class App extends Component {
     constructor(props) {
         super(props);
+        this.state={access:true,token:""};
 
     }
     componentDidMount(){
-        const data= getCookie('udata');
-        createStoreWithMiddleware.dispatch(LocalAuthCheck(data));
+
+        const data=getCookie('udata') ? JSON.parse(getCookie('udata')) : false;
+
+        if(data) {
+            this.setState({access:true,token:data.token});
+        }else {
+            this.setState({access:false});
+        }
+
     }
     render() {
         return (
@@ -42,11 +44,12 @@ export default class App extends Component {
             <Router >
                 <div>
                     <Switch>
-                    <RouteAuth canAccess={true} path="/my-account" name="test" component={()=><MyAccount stuff="test stuff" />} />
+                    <RouteAuth canAccess={this.state.access} path="/my-account" name="test" component={()=><MyAccount token={this.state.token} />} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
-                    <Route path="/page1" component={Home} />
+                    <Route path="/page1" component={Register} />
                     <Route path="/" component={Home} />
+                    <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
             </Router>

@@ -52,7 +52,6 @@ class RegisterComponent extends Component {
     render() {
         const {handleSubmit} = this.props;
         let message=null;
-        console.log(this.props.register.message);
         if(this.props.register.message){
             message= <Snackbar
                 open={true}

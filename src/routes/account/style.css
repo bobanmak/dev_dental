@@ -1,0 +1,12 @@
+.myAcc{
+    margin:1rem;
+}
+.paper{
+    display: 'inline-block';
+    height:100%;
+    padding:5px;
+    display: flex;
+    flex-direction: column;
+    float: 'left';
+
+}

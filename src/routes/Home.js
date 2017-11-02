@@ -14,7 +14,7 @@ export default class IndexPage extends Component {
 				<div id="page-index" className="page">
 
 					<div>
-						<Link to="/todos">Todos</Link>
+						<Link to="/my-account">my acc</Link>
 					</div>
 					<div>
 						<Link to="/page1">Page 1</Link>
