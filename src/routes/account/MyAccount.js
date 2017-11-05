@@ -1,8 +1,12 @@
 import React, {Component} from 'react'
+import {connect} from  'react-redux';
+
+
 import Layout from '../Layout'
-import MyAccountComponent from '../../components/account/MyAccount/MyAccountComponent'
-
-
+import MyAccountComponent from '../../components/account/MyAccountComponent'
+import AddDentistComponent from '../../components/account/AddDentistComponent'
+import EditDentistRoleComponent from '../../components/account/EditDentistRoleComponent'
+import {myAccount} from '../../actions/account_actions';
 
 import {List, ListItem} from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
@@ -14,16 +18,33 @@ import Divider from 'material-ui/Divider';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import styles from './style.css'
 
-export default class MyAccount extends Component {
+ class MyAccount extends Component {
     constructor(props) {
         super(props);
-        this.state={MyAccount:true,AddDentist:false,EditDentistRole:false}
+        this.state={currentView:"MY_ACCOUNT" }
     }
+
     componentDidMount(){
 
     }
-    render() {
 
+    clcMyAccount(){
+        this.props.myAccount(this.props.token);
+        this.setState({currentView:"MY_ACCOUNT"})
+    }
+    render() {
+        let renderTemplate=null;
+        switch(this.state.currentView) {
+            case "MY_ACCOUNT":
+                renderTemplate=<MyAccountComponent />
+                break;
+            case "ADD_DENTIST":
+                renderTemplate=<AddDentistComponent token={this.props.token} />
+                break;
+            case "EDIT_ROLES":
+                renderTemplate=<EditDentistRoleComponent token={this.props.token} />
+                break;
+        }
         return (
             <Layout title="MyAccountComponent page">
                 <div className={styles.myAcc}>
@@ -31,14 +52,14 @@ export default class MyAccount extends Component {
                         <div className="col-md-3">
                             <Paper className={styles.paper}>
                                 <List>
-                                    <ListItem primaryText="My Account" leftIcon={<ContentInbox />} onClick={()=>{this.setState({MyAccount:true})}} />
-                                    <ListItem primaryText="Add Dentist" leftIcon={<ActionGrade />} onClick={()=>{this.setState({AddDentist:true})}} />
-                                    <ListItem primaryText="Edit Dentist Role" leftIcon={<ContentSend />}  onClick={()=>{this.setState({EditDentistRole:true})}} />
+                                    <ListItem primaryText="My Account" leftIcon={<ContentInbox />} onClick={()=>{this.clcMyAccount()}} />
+                                    <ListItem primaryText="Add Dentist" leftIcon={<ActionGrade />} onClick={()=>{this.setState({currentView:"ADD_DENTIST"})}} />
+                                    <ListItem primaryText="Edit Dentist Role" leftIcon={<ContentSend />}  onClick={()=>{this.setState({currentView:"EDIT_ROLES"})}} />
                                 </List>
                             </Paper>
                         </div>
                         <div className="col-md-9">
-                        <MyAccountComponent token={this.props.token} ></MyAccountComponent>
+                            {renderTemplate}
                         </div>
                     </div>
                 </div>
@@ -46,4 +67,10 @@ export default class MyAccount extends Component {
             </Layout>);
     }
 }
+function mapStateToProps({myAccount}){
+    const accountInfo= myAccount[0];
+    console.log(accountInfo);
+    return {accountInfo}
+}
 
+export default connect(mapStateToProps,{myAccount})(MyAccount);

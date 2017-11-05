@@ -57,6 +57,7 @@ var routes = {
 var indexRoutes = ['/',
     '/login',
     '/my-account',
+    '/my-account/edit',
     '/register',
     '/page1',
     '/page2'];

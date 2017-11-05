@@ -9,3 +9,8 @@ HTML, BODY {
 .appbar H1 {
     display: inline;
 }
+.main_content{
+    background:#fff;
+    float:right;
+
+}

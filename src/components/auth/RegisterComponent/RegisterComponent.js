@@ -19,9 +19,7 @@ class RegisterComponent extends Component {
         this.state = {  open: false};
 
     }
-    componentDidMount(){
 
-    }
     renderField(field) {
         return (
             <div>

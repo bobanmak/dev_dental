@@ -13,15 +13,15 @@ module.exports = {
         var decoded = jwt.verify(jwttoken, sails.config.api_config.secret_key);
         User_account.find({id:decoded.user_id})
             .exec(function(err, users) {
-                if(err) res.send(err)
+                if(err)res.serverError(err);
 
-                const  acc={
+               const  acc={
                     user_id:users[0].id,
                     role_id:decoded.role_id,
                     username:users[0].user_name,
                     email:users[0].email
                 };
-                return res.send(acc);
+                    return res.json(acc);
                     });
 
     }
