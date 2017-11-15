@@ -4,6 +4,8 @@ import {connect} from  'react-redux';
 import {userRegister} from '../../../actions/index';
 import {getUserRoles} from '../../../actions/role_actions';
 import {browserHistory} from 'react-router';
+
+import validator from 'validator';
 import _ from 'underscore';
 import {COUNTRIES_LIST} from '../../../utils/countries'
 // material-UI and styles
@@ -72,8 +74,8 @@ class AddDentistComponent extends Component {
     }
 
     onSubmit(values) {
-        console.log(values)
-        //this.props.userRegister(values);
+
+        this.props.userRegister(values);
     }
 
     openDialog=()=>{
@@ -112,7 +114,7 @@ class AddDentistComponent extends Component {
                                     <div className="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <Field
                                             label="First Name"
-                                            name="fisrtName"
+                                            name="firstName"
                                             hint="Enter your First Name"
                                             component={this.renderField}/>
                                     </div>
@@ -168,14 +170,14 @@ class AddDentistComponent extends Component {
                                                 label="Mobile Number"
                                                 name="mobileNumber"
                                                 hint="Enter your Mobile Number"
-                                                component={this.renderField}/>
+                                                component={this.renderField} />
                                     </div>
-                                    <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                    <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12" >
                                             <Field
                                                 label="Licence Number"
                                                 name="licenceNumber"
                                                 hint="Enter your Licence Number"
-                                                component={this.renderField}/>
+                                                component={this.renderField} />
                                     </div>
                                     <div className="col-md-12 col-lg-12 col-sm-6 col-xs-6">
                                             <Field name="role" component={this.renderSelectField} label="Select Role" >
@@ -195,16 +197,38 @@ class AddDentistComponent extends Component {
 
 }
 function validate(values) {
+
     const errors = {}
     //validate inputs from 'values'
     if (!values.username) {
         errors.username = "Please enter username";
     }
-    if (!values.email) {
+    if (values.email) {
+        if( !validator.isEmail(values.email)){
+            errors.email = 'Please enter correct email address'
+        }
+    }else{
         errors.email = "Please enter email";
+    }
+
+    if (values.password) {
+        if( !validator.isLength(values.password,{min:8, max:15})){
+            errors.password = 'Password must be at least 8 characters'
+        }
     }
     if (!values.password) {
         errors.password = "Please enter password";
+    }
+    if (values.licenceNumber) {
+        if( !validator.isLength(values.licenceNumber,{min:6, max:6}) ){
+            errors.licenceNumber = 'Licence number must be exact 6 numbers'
+            if(!validator.isInt(values.licenceNumber)){
+                errors.licenceNumber = 'Licence number must contain only numbers'
+            }
+        }
+    }
+    if (!values.licenceNumber) {
+        errors.licenceNumber = "Please enter Licence Number";
     }
     //if errors is !empty there is something wrong
     return errors;

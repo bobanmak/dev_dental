@@ -15,21 +15,21 @@ module.exports = {
         role_start_time: {
             type: "datetime"
         },
-        role_end_time:{
+        role_end_time: {
             type: "datetime"
         },
-        user_account_id:{
-            type:'integer',
-            model:'user_account'
+        user_account_id: {
+            type: 'number',
+            model: 'user_account'
         },
-        role_id:{
-            type:'integer',
-            model:'role',
-            unique:true
+        role_id: {
+            type: 'integer',
+            model: 'role',
+            unique: true
         },
-        visits:{
-            collection:'visit',
-            via:'dentist_id'
+        visits: {
+            collection: 'visit',
+            via: 'dentist_id'
         }
 
     }

@@ -24,30 +24,33 @@ import Layout from '../../../routes/Layout'
 class DentistComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { users:'',addDentist:false,editDentist:false };
+        this.state = {users: '', addDentist: false, editDentist: false};
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const {token} = this.props
-        if(token) this.props.getAllDentists(token);
+        if (token) this.props.getAllDentists(token);
     }
 
-    renderUsers(){
-       return _.map(this.props.myAccount,(userList,key)=>{
-           return(
-               <ListItem
-                    key = {key}
+    renderUsers() {
+        return _.map(this.props.myAccount, (userList, key) => {
+            return (
+                <ListItem
+                    key={key}
                     primaryText={userList.username}
                     rightIcon={<CommunicationChatBubble />}
-                    onClick = {()=>{this.setState({users:userList})}}
+                    onClick={() => {
+                        this.setState({users: userList})
+                    }}
                 />
-           )
-       })
+            )
+        })
     }
-    renderUserView(){
 
-        return(
+    renderUserView() {
+
+        return (
             <ul>
                 <li>Username:{this.state.users.username}</li>
                 <li>Email:{this.state.users.email}</li>
@@ -59,37 +62,39 @@ class DentistComponent extends Component {
 
     render() {
         const {handleSubmit} = this.props;
-        let currentView=null;
-        if(this.state.addDentist) currentView=<AddDentistComponent />
+        let currentView = null;
+        if (this.state.addDentist) currentView = <AddDentistComponent />
 
-        if(this.state.viewCurrentUser) currentView= this.renderUserView()
+        if (this.state.viewCurrentUser) currentView = this.renderUserView()
 
-        if(this.state.editCurrentUser) currentView= this.renderUserView()
+        if (this.state.editCurrentUser) currentView = this.renderUserView()
         return (
             <Layout title="MyAccountComponent page">
-                    <DentistToolbar />
-                    <div className='container-fluid' >
+                <DentistToolbar />
+                <div className='container-fluid'>
 
-                        <div className='row' >
-                           <div className="col-md-3">
+                    <div className='row'>
+                        <div className="col-md-3">
                             <List>
-                                <RaisedButton label="Add New Dentist" fullWidth={true} onClick={()=>{this.setState({addDentist:true})}} />
+                                <RaisedButton label="Add New Dentist" fullWidth={true} onClick={() => {
+                                    this.setState({addDentist: true})
+                                }}/>
                                 <Subheader>All Dentists</Subheader>
                                 {this.renderUsers()}
                             </List>
-                           </div>
-                           <div className="col-md-9">
-                              {currentView}
-                           </div>
+                        </div>
+                        <div className="col-md-9">
+                            {currentView}
                         </div>
                     </div>
-        </Layout>
-    );
+                </div>
+            </Layout>
+        );
     }
 
 }
 
-function mapStateToProps({myAccount}){
+function mapStateToProps({myAccount}) {
     return {myAccount}
 }
-export default connect(mapStateToProps,{getAllDentists})(DentistComponent)
+export default connect(mapStateToProps, {getAllDentists})(DentistComponent)

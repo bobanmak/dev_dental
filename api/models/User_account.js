@@ -21,26 +21,26 @@ module.exports = {
         firstName: {
             type: 'string'
         },
-        lastName:{
+        lastName: {
             type: 'string'
         },
-        address:{
+        address: {
             type: 'string'
         },
-        city:{
+        city: {
             type: 'string'
         },
-        country:{
+        country: {
             type: 'string'
         },
-        phoneNumber:{
-            type: 'integer'
+        phoneNumber: {
+            type: 'numeric'
         },
-        mobileNumber:{
-            type: 'integer'
+        mobileNumber: {
+            type: 'numeric'
         },
-        licence:{
-            type: 'string'
+        licence: {
+            type: 'numeric'
         },
         password: {
             type: 'string'

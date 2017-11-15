@@ -63,6 +63,7 @@
 		"sails-mysql": "^0.11.5",
 		"style-loader": "^0.13.1",
 		"underscore": "^1.8.3",
+		"validator": "^9.1.1",
 		"webpack": "^2.1.0-beta.25",
 		"webpack-dev-middleware": "^1.8.4",
 		"webpack-hot-middleware": "^2.10.0"

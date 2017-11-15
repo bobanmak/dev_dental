@@ -11,30 +11,33 @@ import Layout from '../../../routes/Layout'
 class MyAccountComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = {  open: ""};
+        this.state = {open: ""};
     }
-    componentDidMount(){
+
+    componentDidMount() {
 
         const {token} = this.props
-        if(token) this.props.myAccount(token);
+        if (token) this.props.myAccount(token);
 
     }
+
     componentWillReceiveProps(props) {
         // Update the chart with new data every time we receive props.
 
     }
+
     render() {
 
         return (
             <Layout title="MyAccountComponent page">
                 <div className="myAccount">
-                    <div className={styles.myAccount} >
-                           <div className="row">
-                                <div className="col-md-6">Name</div>
-                                <div className="col-md-6">{this.props.accountInfo.username}</div>
-                                <div className="col-md-6">Email</div>
-                                <div className="col-md-6">{this.props.accountInfo.email}</div>
-                            </div>
+                    <div className={styles.myAccount}>
+                        <div className="row">
+                            <div className="col-md-6">Name</div>
+                            <div className="col-md-6">{this.props.accountInfo.username}</div>
+                            <div className="col-md-6">Email</div>
+                            <div className="col-md-6">{this.props.accountInfo.email}</div>
+                        </div>
                     </div>
                 </div>
             </Layout>
@@ -42,8 +45,8 @@ class MyAccountComponent extends Component {
     }
 
 }
-function mapStateToProps(state){
-    return {accountInfo:state.myAccount}
+function mapStateToProps(state) {
+    return {accountInfo: state.myAccount}
 }
 
-export default connect(mapStateToProps,{myAccount})(MyAccountComponent);
+export default connect(mapStateToProps, {myAccount})(MyAccountComponent);

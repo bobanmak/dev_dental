@@ -21,8 +21,8 @@ class EditDentistRoleComponent extends Component {
                     EditDentistRoleComponent
                 </Paper>
             </div>
-    )
-        ;
+        )
+            ;
     }
 
 }

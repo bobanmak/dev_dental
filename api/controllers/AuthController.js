@@ -82,7 +82,7 @@ module.exports = {
                             const user_acc = {
                                 username: params.username,
                                 email: params.email,
-                                fisrtName: params.fisrtName,
+                                firstName: params.firstName,
                                 lastName: params.lastName,
                                 address: params.streetAddress,
                                 city: params.city,
@@ -104,7 +104,7 @@ module.exports = {
 
                                     const roles={
                                         user_account_id:user.id,
-                                        role_id:3
+                                        role_id: params.role
                                     }
                                     User_has_role.create(roles, function (err, roles) {
                                         if (err){

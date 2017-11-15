@@ -49,6 +49,7 @@ export default class AppRoutes extends Component {
                     <RouteAuth exact canAccess={this.state.access} path="/my-account"  userRoleID='3' token={this.state.token} component={MyAccountComponent} />
                     <RouteAuth exact canAccess={this.state.access} path="/my-account/dentists" token={this.state.token} component={DentistComponent} />
 
+                    <RouteAuth exact canAccess={this.state.access} path="/dentists"/>
                     //auth routes
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
