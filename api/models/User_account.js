@@ -12,11 +12,35 @@ module.exports = {
     autoCreatedAt: false,
     autoUpdatedAt: false,
     attributes: {
-        user_name: {
+        username: {
             type: "string"
         },
         email: {
             type: "email"
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName:{
+            type: 'string'
+        },
+        address:{
+            type: 'string'
+        },
+        city:{
+            type: 'string'
+        },
+        country:{
+            type: 'string'
+        },
+        phoneNumber:{
+            type: 'integer'
+        },
+        mobileNumber:{
+            type: 'integer'
+        },
+        licence:{
+            type: 'string'
         },
         password: {
             type: 'string'

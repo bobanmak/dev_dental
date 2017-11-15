@@ -33,6 +33,7 @@ export default class Layout extends Component {
 		return (
 			<MuiThemeProvider>
 				<div id="layout">
+
 					<HeaderAppComponent />
 					<SidebarComponent />
 					<Paper className="main_content" style={style}>

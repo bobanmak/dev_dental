@@ -28,8 +28,6 @@ export default class HeaderAppComponent extends Component {
     }
 
     render(){
-
-
             return(
                 <AppBar title={ this.props.title } className="appbar"  iconElementRight={this.state.logged ? <Logged /> : <Login />}/>
             )

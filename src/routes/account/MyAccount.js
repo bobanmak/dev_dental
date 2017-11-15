@@ -3,8 +3,8 @@ import {connect} from  'react-redux';
 
 
 import Layout from '../Layout'
-import MyAccountComponent from '../../components/account/MyAccountComponent'
-import AddDentistComponent from '../../components/account/AddDentistComponent'
+import MyAccountComponent from '../../components/account/MyAccount/MyAccountComponent'
+import AddDentistComponent from '../../components/account/DentistComponent/DentistComponent'
 import EditDentistRoleComponent from '../../components/account/EditDentistRoleComponent'
 import {myAccount} from '../../actions/account_actions';
 

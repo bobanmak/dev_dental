@@ -49,7 +49,11 @@ var routes = {
     'post /api/v1/register': 'AuthController.register',
     'post /api/v1/login': 'AuthController.login',
     'post /api/v1/logout': 'AuthController.logout',
-    'get /api/v1/myAccount': 'User_accountController.index',
+
+    'get /api/v1/myAccount': 'User_accountController.getSingleUser',
+    'get /api/v1/listUsers': 'User_accountController.getAllUSers',
+
+    'get /api/v1/roles': 'RoleController.listRoles',
 
 };
 
@@ -57,7 +61,8 @@ var routes = {
 var indexRoutes = ['/',
     '/login',
     '/my-account',
-    '/my-account/edit',
+    '/my-account/dentists',
+    '/my-account/dentists/add',
     '/register',
     '/page1',
     '/page2'];

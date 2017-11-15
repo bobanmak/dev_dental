@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from  'react-redux';
 import {userLogin} from '../../../actions';
-import {browserHistory} from 'react-router';
+import {Redirect} from 'react-router-dom';
 import {getCookie} from '../../../utils/cookies'
 // material-UI and styles
 import Paper from 'material-ui/Paper';
@@ -12,7 +12,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
 import Snackbar from 'material-ui/Snackbar';
-
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
@@ -21,9 +20,6 @@ class LoginComponent extends Component {
     }
     componentDidMount(){
 
-        if(getCookie('udata')){
-            browserHistory.push('/');
-        };
     }
     renderField(field) {
         return (
@@ -63,9 +59,11 @@ class LoginComponent extends Component {
     }
 
     render() {
+        //return to homepage if aut cookie exists
+        //if(getCookie('udata'))  return( <Redirect to='/' />)
+
         const {handleSubmit} = this.props;
         let message=null;
-        console.log(this.props.login.message);
         if(this.props.login.message){
             message= <Snackbar
                 open={true}
@@ -73,11 +71,13 @@ class LoginComponent extends Component {
                 autoHideDuration={4000}
                 onRequestClose={this.handleRequestClose}
             />
+
             this.props.login.message=null;
-            if(this.props.login.logedIn){
-                browserHistory.push('/');
-            }
+            return( window.location.href="/");
         }
+        //redirect to homepage if succesfully loged in
+        if(this.props.login.logged_in)  return(<Redirect to='/' />)
+
         return (
             <div>
                 <Paper className={styles.login} zDepth={2}>

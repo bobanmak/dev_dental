@@ -24,7 +24,8 @@ module.exports = {
         },
         role_id:{
             type:'integer',
-            model:'role'
+            model:'role',
+            unique:true
         },
         visits:{
             collection:'visit',

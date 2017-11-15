@@ -27,7 +27,7 @@ export default class SidebarComponent extends Component {
                 <AppBar iconElementLeft ={false} title="Dentalniov" />
 
             <List>
-                <ListItem primaryText="Visits" leftIcon={<ContentSend />}   containerElement={<Link to="/visits" />} />
+                <ListItem primaryText="Visits" leftIcon={<ContentSend />}   containerElement={<Link to="/register" />} />
                 <ListItem
                     primaryText="Patients"
                     leftIcon={<ContentInbox />}
@@ -66,7 +66,8 @@ export default class SidebarComponent extends Component {
                     nestedItems={[
                         <ListItem
                             key={1}
-                            primaryText="Add Dentist"
+                            primaryText="Dentist Management"
+                            containerElement={<Link to="/my-account/dentists" />}
                             leftIcon={<ActionGrade />}
                          />,
                         <ListItem

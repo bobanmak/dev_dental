@@ -21,16 +21,25 @@ class RouteAuth extends Component {
     }
 
     render() {
-        let {canAccess, component, path, name, exact, strict} = this.props
-        let routeProps = {
+        let {canAccess, component, path, token, exact, strict} = this.props
+        let authProps = {
             path,
-            component,
-            name,
+            token,
             exact,
             strict
         }
-        return canAccess ? <Route {...routeProps}  /> : <Redirect to="/login" />
+
+        return canAccess ?  <Route component={ () => {
+                return renderMergedProps(component,this.props);
+    }}/> : <Redirect to="/login" />
     }
+}
+
+const renderMergedProps = (component, ...rest) => {
+    const finalProps = Object.assign({}, ...rest);
+    return (
+        React.createElement(component, finalProps)
+    );
 }
 
 export default RouteAuth

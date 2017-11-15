@@ -18,9 +18,8 @@ module.exports = {
             })
             .exec(function (err, users) {
                 if (err) {
-
                     res.status(401);
-                    return res.send(err)
+                    return res.serverError(err)
                 }
                 if (users.length<=0) {
                     res.status(200);
@@ -37,13 +36,13 @@ module.exports = {
                         //TODO - ADD USER ROLE AND STATUS IF AVAILABLE
                         const logged_in = {
                             user_id: users[0].id,
-                            username: users[0].user_name,
+                            username: users[0].username,
                             //user_role:users.role.role_id,
                             //user_status:user.status.status_id
                         };
                         let token = jwt.sign(logged_in, sails.config.api_config.secret_key);
 
-                         return res.send({message:"succesfully loged in",logged_in:true,username:users[0].user_name,token:token});
+                         return res.send({message:"succesfully loged in",logged_in:true,username:users[0].username,token:token});
 
 
                     } else {
@@ -81,10 +80,19 @@ module.exports = {
                     bcrypt.genSalt(saltRounds, function (err, salt) {
                         bcrypt.hash(params.password, salt, function (err, hash) {
                             const user_acc = {
-                                user_name: params.username,
+                                username: params.username,
                                 email: params.email,
+                                fisrtName: params.fisrtName,
+                                lastName: params.lastName,
+                                address: params.streetAddress,
+                                city: params.city,
+                                country:params.country,
+                                phoneNumber:params.homeNumber,
+                                mobileNumber:params.mobileNumber,
+                                licence:params.licenceNumber,
                                 password: hash,
-                                password_salt: salt
+                                password_salt: salt,
+
                             }
                             User_account.create(user_acc, function (err, user) {
                                 if (err) {
@@ -93,6 +101,7 @@ module.exports = {
                                     /* TODO
                                        assign role depending on the
                                      */
+
                                     const roles={
                                         user_account_id:user.id,
                                         role_id:3
@@ -105,7 +114,7 @@ module.exports = {
                                         const response_message = {
                                             user_id: user.id,
                                             role_id: roles.role_id,
-                                            user_name: user.user_name,
+                                            username: user.username,
                                         }
                                         var token = jwt.sign(response_message, sails.config.api_config.secret_key);
                                         return res.json({message:"User created successuly.You can now login",logged_in:true,username:user.username,token:token} );

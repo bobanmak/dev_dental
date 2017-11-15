@@ -23,26 +23,15 @@ export function  addDentist(values){
     }
 }
 
-export function  getAllDentists(values){
-    const request= axios.post('/api/v1/register',values);
+export function  getAllDentists(token){
+    const request= axios.get('/api/v1/listUsers',{
+        params: {
+            utoken: token
+        }
+    });
     return {
-        type: USER_REGISTER,
+        type: GET_DENTISTS,
         payload: request
     }
 }
 
-export function  getUserRoles(values){
-    const request= axios.post('/api/v1/register',values);
-    return {
-        type: USER_REGISTER,
-        payload: request
-    }
-}
-
-export function  setUserRoles(values){
-    const request= axios.post('/api/v1/register',values);
-    return {
-        type: USER_REGISTER,
-        payload: request
-    }
-}

@@ -12,5 +12,5 @@ HTML, BODY {
 .main_content{
     background:#fff;
     float:right;
-
+    overflow:auto
 }
