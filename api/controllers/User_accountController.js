@@ -155,7 +155,8 @@ module.exports = {
      * @returns :: {object}
      */
 
-    updateUser: function (req, res, id) {
+    updateUser: function (req, res) {
+        const userId= req.params.id;
         const {values} = req.params.all();
         bcrypt.genSalt(saltRounds, function (err, salt) {
             bcrypt.hash(values.password, salt, function (err, hash) {
@@ -173,16 +174,22 @@ module.exports = {
                     password: hash,
                     password_salt: salt,
                 }
-                User_account.update({id: 55}, updatedUser).exec(function afterwards(err, updated) {
+                User_account.update({id:userId}, updatedUser).exec(function afterwards(err, updated) {
 
                     if (err) {
                         return res.negotiate(err);
                     }
+                    User_has_role.update({user_account_id:userId},{role_id: values.role}).exec(function afterwards(err, updated) {
+                        if (err) {
+                            return res.negotiate(err);
+                        }
 
-                    return res.json({
-                        message: 'Dentist was successfully updated',
-                        status: 200
-                    });
+                        return res.json({
+                            message: 'Dentist was successfully updated',
+                            status: 200
+                        });
+                    })
+ 
 
                 });
             })
