@@ -46,13 +46,21 @@ var routes = {
      *                                                                          *
      ***************************************************************************/
 
-    'post /api/v1/register': 'AuthController.register',
+    //auth related routes
     'post /api/v1/login': 'AuthController.login',
     'post /api/v1/logout': 'AuthController.logout',
+    'get /api/v1/token': 'AuthController.getToken',
 
-    'get /api/v1/myAccount': 'User_accountController.getSingleUser',
-    'get /api/v1/listUsers': 'User_accountController.getAllUSers',
+    //user account backend routes
+    'post /api/v1/register': 'User_accountController.createUser',
+    'get /api/v1/users': 'User_accountController.getAllUsers',
+    'get /api/v1/users/:id': 'User_accountController.getSingleAccount',
+    'post /api/v1/users': 'User_accountController.createUser',
+    'put /api/v1/users/:id': 'User_accountController.updateUser',
+    'delete /api/v1/users/:id': 'User_accountController.deleteUser',
 
+
+    //user role related routes
     'get /api/v1/roles': 'RoleController.listRoles',
 
 };
@@ -61,8 +69,9 @@ var routes = {
 var indexRoutes = ['/',
     '/login',
     '/my-account',
-    '/my-account/dentists',
-    '/my-account/dentists/add',
+    '/dentists',
+    '/dentist/add',
+    '/dentist/edit',
     '/register',
     '/page1',
     '/page2'];

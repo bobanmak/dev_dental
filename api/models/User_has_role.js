@@ -23,7 +23,7 @@ module.exports = {
             model: 'user_account'
         },
         role_id: {
-            type: 'integer',
+            type: 'number',
             model: 'role',
             unique: true
         },

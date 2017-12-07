@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const MY_ACCOUNT = 'my_account';
+export const TOKEN_DATA = 'token_data';
 export const ADD_DENTIST = 'add_dentist';
 export const GET_DENTISTS = 'get_dentist';
 
@@ -11,6 +12,17 @@ export function  myAccount(token){
     })
     return {
         type: MY_ACCOUNT,
+        payload: request
+    }
+}
+export function  getTokenData(token){
+    const request=axios.get('/api/v1/token', {
+        params: {
+            utoken: token
+        }
+    })
+    return {
+        type: TOKEN_DATA,
         payload: request
     }
 }

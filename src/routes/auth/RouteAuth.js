@@ -21,9 +21,10 @@ class RouteAuth extends Component {
     }
 
     render() {
-        let {canAccess, component, path, token, exact, strict} = this.props
+        let {canAccess, component, path,userRoleID, token, exact, strict} = this.props
         let authProps = {
             path,
+            userRoleID,
             token,
             exact,
             strict

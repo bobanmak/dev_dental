@@ -3,7 +3,7 @@ import {Field, reduxForm} from 'redux-form';
 import {connect} from  'react-redux';
 import {userLogin} from '../../../actions';
 import {Redirect} from 'react-router-dom';
-import {getCookie} from '../../../utils/cookies'
+import _ from 'underscore'
 // material-UI and styles
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -15,12 +15,14 @@ import Snackbar from 'material-ui/Snackbar';
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = {  open: false};
+        this.state = {open: false};
 
     }
-    componentDidMount(){
+
+    componentDidMount() {
 
     }
+
     renderField(field) {
         return (
             <div>
@@ -35,27 +37,28 @@ class LoginComponent extends Component {
 
         )
     }
-    keepMeLoged(field){
-        return(
+
+    keepMeLoged(field) {
+        return (
             <div>
                 <Checkbox
                     label="Keep Me loged In"
                     {...field.input}
                 />
             </div>
-            )
+        )
     }
 
     onSubmit(values) {
         this.props.userLogin(values);
     }
 
-    openDialog=()=>{
-        this.setState({ open: true})
+    openDialog = () => {
+        this.setState({open: true})
 
     }
-    closeDialog=()=>{
-        this.setState({ open: false})
+    closeDialog = () => {
+        this.setState({open: false})
     }
 
     render() {
@@ -63,20 +66,21 @@ class LoginComponent extends Component {
         //if(getCookie('udata'))  return( <Redirect to='/' />)
 
         const {handleSubmit} = this.props;
-        let message=null;
-        if(this.props.login.message){
-            message= <Snackbar
+        let message = null;
+        if (this.props.login.message) {
+            message = <Snackbar
                 open={true}
                 message={this.props.login.message}
                 autoHideDuration={4000}
                 onRequestClose={this.handleRequestClose}
             />
 
-            this.props.login.message=null;
-            return( window.location.href="/");
+            this.props.login.message = null;
+            //
         }
+        if(!_.isEmpty(this.props.login)) return( window.location.href="/")
         //redirect to homepage if succesfully loged in
-        if(this.props.login.logged_in)  return(<Redirect to='/' />)
+        //if(this.props.login.logged_in)  return(<Redirect to='/' />)
 
         return (
             <div>
@@ -95,8 +99,8 @@ class LoginComponent extends Component {
 
                         <Field
                             name="keepMeLoged"
-                            component={this.keepMeLoged} />
-                        <RaisedButton type="submit"  label="Login" primary={true} fullWidth={true}/>
+                            component={this.keepMeLoged}/>
+                        <RaisedButton type="submit" label="Login" primary={true} fullWidth={true}/>
                     </form>
                 </Paper>
                 {message}
@@ -117,12 +121,12 @@ function validate(values) {
     //if errors is !empty there is something wrong
     return errors;
 }
-function mapStateToProps({login}){
+function mapStateToProps({login}) {
     return {login}
 }
 export default reduxForm({
     validate,
     form: 'LoginForm'
 })(
-    connect(mapStateToProps,{userLogin})(LoginComponent)
+    connect(mapStateToProps, {userLogin})(LoginComponent)
 )

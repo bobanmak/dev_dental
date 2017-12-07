@@ -7,15 +7,22 @@
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
  */
-module.exports = function(req, res, next) {
+const jwt = require('jsonwebtoken');
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
-    return next();
-  }
+module.exports = function (req, res, next) {
 
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+    const params = req.params.all();
+    const jwttoken = params.utoken;
+    var decoded = jwt.verify(jwttoken, sails.config.api_config.secret_key);
+
+    // User is allowed, proceed to the next policy,
+    // or if this is the last policy, the controller
+    if (decoded) {
+        req.session.tokenData = decoded;
+        return next();
+    }
+
+    // User is not allowed
+    // (default res.forbidden() behavior can be overridden in `config/403.js`)
+    return res.forbidden('You are not permitted to use this controller');
 };
