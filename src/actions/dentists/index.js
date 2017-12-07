@@ -80,10 +80,8 @@ export function addUser(token, values) {
 
 export function updateUser(token, values, id) {
     const request = axios.put(`/api/v1/users/${id}`, {
-        params: {
-            utoken: token,
-            values: values
-        }
+        utoken: token,
+        values: values
     })
     return {
         type: UPDATE_USER,

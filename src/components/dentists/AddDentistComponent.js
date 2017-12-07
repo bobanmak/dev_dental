@@ -8,6 +8,7 @@ import validator from 'validator';
 import _ from 'underscore';
 import {COUNTRIES_LIST} from '../../utils/countries'
 import DentistToolbar from './toolbar'
+import {withRouter} from 'react-router-dom'
 // material-UI and styles
 
 import TextField from 'material-ui/TextField';
@@ -23,8 +24,7 @@ class AddDentistComponent extends Component {
         this.state = {
             value: "",
             countries: "",
-            roles: "",
-            redirect: false
+            roles: ""
         };
 
     }
@@ -76,9 +76,7 @@ class AddDentistComponent extends Component {
 
     onSubmit(values) {
         this.props.addUser(this.props.token, values);
-        setTimeout(function () {
-            this.setState({redirect: true});
-        }.bind(this), 3000);
+
     }
 
     render() {
@@ -88,10 +86,12 @@ class AddDentistComponent extends Component {
             message = <Snackbar
                 open={true}
                 message={this.props.dentist.message}
-                autoHideDuration={4000}
+                autoHideDuration={1000}
                 onRequestClose={this.handleRequestClose}
             />
-
+            setTimeout(function () {
+                this.props.history.push('/dentists')
+            }.bind(this), 1000);
         }
         return (
             <Layout title="MyAccountComponent page">
@@ -232,15 +232,18 @@ function validate(values) {
     if (!values.licence) {
         errors.licence = "Please enter Licence Number";
     }
+    if (!values.role) {
+        errors.role = "Please provide role for this user";
+    }
     //if errors is !empty there is something wrong
     return errors;
 }
 function mapStateToProps({dentistRole, dentist}) {
     return {dentistRole, dentist}
 }
-export default reduxForm({
+export default  withRouter(reduxForm({
     validate,
     form: 'AddDentistForm'
 })(
     connect(mapStateToProps, {addUser, getUserRoles})(AddDentistComponent)
-)
+))

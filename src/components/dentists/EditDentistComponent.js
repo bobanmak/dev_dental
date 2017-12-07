@@ -8,6 +8,7 @@ import validator from 'validator';
 import _ from 'underscore';
 import {COUNTRIES_LIST} from '../../utils/countries'
 import DentistToolbar from './toolbar'
+import {withRouter} from 'react-router-dom'
 // material-UI and styles
 
 import TextField from 'material-ui/TextField';
@@ -33,6 +34,7 @@ class EditDentistComponent extends Component {
         this.setState({countries: COUNTRIES_LIST})
         this.props.getUserRoles();
         this.setState({initialValues:this.props.location.state.user})
+
     }
 
 
@@ -71,26 +73,25 @@ class EditDentistComponent extends Component {
         })
     }
 
-    onSubmit(values) {
-        this.props.addUser(this.props.token, values);
-        setTimeout(function () {
-            this.setState({redirect: true});
-        }.bind(this), 3000);
+    onSubmit(values,) {
+        this.props.updateUser(this.props.token, values,this.state.initialValues.id);
+
     }
 
     render() {
         const {handleSubmit} = this.props;
          let message = null;
-        // if (this.props.dentist.message) {
-        //     message = <Snackbar
-        //         open={true}
-        //         message={this.props.dentist.message}
-        //         autoHideDuration={4000}
-        //         onRequestClose={this.handleRequestClose}
-        //     />
-        //
-        // }
-
+        if (this.props.dentist.message) {
+            message = <Snackbar
+                open={true}
+                message={this.props.dentist.message}
+                autoHideDuration={4000}
+                onRequestClose={this.handleRequestClose}
+            />
+            setTimeout(function () {
+                this.props.history.push('/dentists')
+            }.bind(this), 1000);
+        }
         return (
             <Layout title="MyAccountComponent page">
                 <DentistToolbar />
@@ -229,22 +230,27 @@ function validate(values) {
             }
         }
     }
+
     if (!values.licence) {
         errors.licence = "Please enter Licence Number";
+    }
+    if (!values.role) {
+        errors.role = "Please provide role for this user";
     }
     //if errors is !empty there is something wrong
     return errors;
 }
-function mapStateToProps({dentistRole},ownProps) {
+function mapStateToProps({dentistRole,dentist},ownProps) {
 
     return {
         initialValues: ownProps.location.state.user,
-        dentistRole
+        dentistRole,
+        dentist
     }
 }
 
 
-export default connect(mapStateToProps, {updateUser, getUserRoles})(reduxForm({
+export default withRouter(connect(mapStateToProps, {updateUser, getUserRoles})(reduxForm({
     validate,
     form: 'EditDentistForms'
-})(EditDentistComponent))
+})(EditDentistComponent)))
