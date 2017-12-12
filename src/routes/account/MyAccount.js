@@ -3,19 +3,13 @@ import {connect} from  'react-redux';
 
 
 import Layout from '../Layout'
-import MyAccountComponent from '../../components/account/MyAccount/MyAccountComponent'
+import MyAccountComponent from '../../components/account/MyAccountComponent'
 import AddDentistComponent from '../../components/account/DentistComponent/DentistComponent'
 import EditDentistRoleComponent from '../../components/account/EditDentistRoleComponent'
 import {myAccount} from '../../actions/account_actions';
 
 import {List, ListItem} from 'material-ui/List';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import Paper from 'material-ui/Paper';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import Divider from 'material-ui/Divider';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+
 import styles from './style.css'
 
  class MyAccount extends Component {
@@ -52,9 +46,9 @@ import styles from './style.css'
                         <div className="col-md-3">
                             <Paper className={styles.paper}>
                                 <List>
-                                    <ListItem primaryText="My Account" leftIcon={<ContentInbox />} onClick={()=>{this.clcMyAccount()}} />
-                                    <ListItem primaryText="Add Dentist" leftIcon={<ActionGrade />} onClick={()=>{this.setState({currentView:"ADD_DENTIST"})}} />
-                                    <ListItem primaryText="Edit Dentist Role" leftIcon={<ContentSend />}  onClick={()=>{this.setState({currentView:"EDIT_ROLES"})}} />
+                                    <ListItem primaryText="My Account" onClick={()=>{this.clcMyAccount()}} />
+                                    <ListItem primaryText="Add Dentist" onClick={()=>{this.setState({currentView:"ADD_DENTIST"})}} />
+                                    <ListItem primaryText="Edit Dentist Role"   onClick={()=>{this.setState({currentView:"EDIT_ROLES"})}} />
                                 </List>
                             </Paper>
                         </div>

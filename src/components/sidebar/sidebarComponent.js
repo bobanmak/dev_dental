@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import {deepOrange300,purple500 } from 'material-ui/styles/colors';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
-
-
+import DentistIcon from '../../utils/icons/DentistIcon'
+import styles from './style.css'
 export default class SidebarComponent extends Component {
     constructor(props) {
         super(props);
@@ -19,10 +20,20 @@ export default class SidebarComponent extends Component {
     render() {
 
         return (
-            <Drawer docked={true} width={300} open={true} className="sidebarMenu">
-                <AppBar title="Dentalniov"/>
+            <Drawer width={250} open={true} zDepth={0}  containerClassName={styles.drawerStyle} >
 
-                <List>
+                <List  className="sidebarDrawer"  >
+                    <div className={styles.sidebarAvatar}>
+                        <Avatar
+                            color={deepOrange300}
+                            backgroundColor={purple500}
+                            size={100}
+                        >
+                            D
+                        </Avatar>
+                        <h5>Welcome User</h5>
+                    </div>
+
                     <ListItem primaryText="Visits" leftIcon={<ContentSend />}
                               containerElement={<Link to="/register"/>}/>
                     <ListItem
@@ -56,7 +67,7 @@ export default class SidebarComponent extends Component {
                     />
                     <ListItem
                         primaryText="Dentists"
-                        leftIcon={<ContentInbox />}
+                        leftIcon={<DentistIcon />}
                         initiallyOpen={false}
                         containerElement={<Link to="/dentists"/>}
                         primaryTogglesNestedList={true}

@@ -12,7 +12,7 @@ import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 
 //my account routes
-import MyAccountComponent from './components/account/MyAccount/MyAccountComponent'
+import MyAccountComponent from './components/account/MyAccountComponent'
 import DentistListComponent from './components/dentists/DentistListComponent'
 import AddDentistComponent from './components/dentists/AddDentistComponent'
 import EditDentistComponent from './components/dentists/EditDentistComponent'
@@ -29,13 +29,13 @@ const PropsRoute = ({component, ...rest}) => {
 class AppRoutes extends Component {
     constructor(props) {
         super(props);
-        this.state = {access: true, token: ""};
+        this.state = {access: true, token: "", userId:"",userRole:""};
     }
 
     componentDidMount() {
         const data = getCookie('udata') ? JSON.parse(getCookie('udata')) : false;
         if (data) {
-            this.setState({access: true, token: data.token});
+            this.setState({access: true, token: data.token,userId:data.user_id,userRoleId:data.role_id});
         } else {
             this.setState({access: false});
         }
@@ -50,16 +50,19 @@ class AppRoutes extends Component {
                 <div>
                     <Switch>
                         //my account routes
-                        <RouteAuth exact canAccess={this.state.access} path="/my-account" userRoleID={tokenData.role_id}
-                                   token={this.state.token} component={MyAccountComponent}/>
+                        <RouteAuth exact canAccess={this.state.access} path="/my-account" token={this.state.token}
+                                   userId={this.state.userId}
+                                   userRoleId={this.state.userRoleId}
+                                   component={MyAccountComponent}/>
+                        //dentist related components
                         <RouteAuth exact canAccess={this.state.access} path="/dentists" token={this.state.token}
                                    userRoleID={tokenData}
                                    component={DentistListComponent}/>
                         <RouteAuth exact canAccess={this.state.access} path="/dentist/add" token={this.state.token}
                                    userRoleID={tokenData}
                                    component={AddDentistComponent}/>
+
                         <RouteAuth exact canAccess={this.state.access} path="/dentist/edit" token={this.state.token}
-                                   userRoleID={tokenData}
                                    component={EditDentistComponent}/>
                         //auth routes
                         <Route exact path="/login" component={Login}/>

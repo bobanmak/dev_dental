@@ -33,6 +33,8 @@ module.exports = {
                     city: users[0].city,
                     country: users[0].country,
                     phoneNumber: users[0].phoneNumber,
+                    mobileNumber: users[0].mobileNumber,
+                    licence: users[0].licence,
                     licenceNumber: users[0].licenceNumber
                 };
                 return res.json(acc);
@@ -131,6 +133,10 @@ module.exports = {
                                         }
                                         var token = jwt.sign(response_message, sails.config.api_config.secret_key);
                                         return res.json({
+                                            message: "Dentist was successfully created",
+                                            logged_in: true,
+                                            user_id: user.id,
+                                            role_id: roles.role_id,
                                             message: "User created successfully.You can now login",
                                             logged_in: true,
                                             token: token
@@ -156,7 +162,7 @@ module.exports = {
      */
 
     updateUser: function (req, res) {
-        const userId= req.params.id;
+        const userId = req.params.id;
         const {values} = req.params.all();
         bcrypt.genSalt(saltRounds, function (err, salt) {
             bcrypt.hash(values.password, salt, function (err, hash) {
@@ -174,12 +180,12 @@ module.exports = {
                     password: hash,
                     password_salt: salt,
                 }
-                User_account.update({id:userId}, updatedUser).exec(function afterwards(err, updated) {
+                User_account.update({id: userId}, updatedUser).exec(function afterwards(err, updated) {
 
                     if (err) {
                         return res.negotiate(err);
                     }
-                    User_has_role.update({user_account_id:userId},{role_id: values.role}).exec(function afterwards(err, updated) {
+                    User_has_role.update({user_account_id: userId}, {role_id: values.role}).exec(function afterwards(err, updated) {
                         if (err) {
                             return res.negotiate(err);
                         }
@@ -189,7 +195,6 @@ module.exports = {
                             status: 200
                         });
                     })
- 
 
                 });
             })

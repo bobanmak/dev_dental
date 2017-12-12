@@ -1,11 +1,18 @@
-.myAccount{
-    padding:1rem;
-    margin-top:rem;
+.myAccount {
+    padding: 1rem;
+    margin-top: 1rem;
 
 }
-.addDentist{
+
+.myAccountPaper div ul li span {
+    text-align: right;
+    padding-left:5px;
+}
+
+.addDentist {
 
 }
-.loginBtn,.registerBtn{
+
+.loginBtn, .registerBtn {
 
 }

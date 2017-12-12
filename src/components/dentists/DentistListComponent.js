@@ -8,9 +8,11 @@ import {deleteUser} from '../../actions/dentists';
 import {Link, withRouter} from 'react-router-dom';
 
 // material-UI and styles
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import Layout from '../../routes/Layout'
+import EditDentist from 'material-ui-icons/AddCircleOutline';
+import DeleteDentis from 'material-ui-icons/RemoveCircleOutline';
 import {
     Table,
     TableBody,
@@ -102,10 +104,10 @@ class DentistListComponent extends Component {
                     <TableRowColumn>{dentist.email}</TableRowColumn>
                     <TableRowColumn>{dentist.licence}</TableRowColumn>
                     <TableRowColumn>
-                        <RaisedButton label="Edit" primary={true} onClick={() => {
+                        <FlatButton icon={<EditDentist />}  primary={true} onClick={() => {
                             this.openEditScreen(dentist)
                         }}/>
-                        <RaisedButton label="Delete"
+                        <FlatButton icon={<DeleteDentis />}
                                       onClick={() => {
                                           this.toggleCloseDialog(dentist)
                                       }}

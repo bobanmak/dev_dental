@@ -42,8 +42,10 @@ module.exports = {
                         };
                         let token = jwt.sign(logged_in, sails.config.api_config.secret_key);
                         return res.send({
-                            message: "succesfully loged in",
+                            message: "Dentist was successfully logged in",
                             logged_in: true,
+                            user_id: users[0].id,
+                            role_id: users[0].user_role[0].role_id,
                             token: token
                         });
 

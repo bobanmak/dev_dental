@@ -1,16 +1,19 @@
 HTML, BODY {
     font-family: Roboto;
-    background: lightgrey!important;
+    background: #FAFAFA!important;
     margin: 0;
     padding: 0;
     height: 100%;
 }
-
+.appbar{
+    z-index: 1500!important;
+}
 .appbar H1 {
     display: inline;
 }
+
 .main_content{
-    background:#fff;
+    background: #FAFAFA!important;
     float:right;
     overflow:auto
 }

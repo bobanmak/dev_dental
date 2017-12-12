@@ -100,7 +100,7 @@ class LoginComponent extends Component {
                         <Field
                             name="keepMeLoged"
                             component={this.keepMeLoged}/>
-                        <RaisedButton type="submit" label="Login" primary={true} fullWidth={true}/>
+                        <RaisedButton   type="submit" label="Login" primary={true} fullWidth={true}/>
                     </form>
                 </Paper>
                 {message}
