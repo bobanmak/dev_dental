@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from  'react-redux';
 import {userLogin} from '../../../actions';
-import {Redirect} from 'react-router-dom';
+
 import _ from 'underscore'
 // material-UI and styles
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import styles from './style.css';
-import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
+import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
 import Snackbar from 'material-ui/Snackbar';
 class LoginComponent extends Component {
@@ -19,8 +18,8 @@ class LoginComponent extends Component {
 
     }
 
-    componentDidMount() {
-
+    componentDidMount(){
+        console.log(this.props)
     }
 
     renderField(field) {
@@ -53,14 +52,6 @@ class LoginComponent extends Component {
         this.props.userLogin(values);
     }
 
-    openDialog = () => {
-        this.setState({open: true})
-
-    }
-    closeDialog = () => {
-        this.setState({open: false})
-    }
-
     render() {
         //return to homepage if aut cookie exists
         //if(getCookie('udata'))  return( <Redirect to='/' />)
@@ -76,15 +67,14 @@ class LoginComponent extends Component {
             />
 
             this.props.login.message = null;
-            //
+
         }
         if(!_.isEmpty(this.props.login)) return( window.location.href="/")
-        //redirect to homepage if succesfully loged in
-        //if(this.props.login.logged_in)  return(<Redirect to='/' />)
+
 
         return (
             <div>
-                <Paper className={styles.login} zDepth={2}>
+                <Paper className={styles.login} elevation={2}>
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                         <Field
                             label="email"
@@ -100,7 +90,7 @@ class LoginComponent extends Component {
                         <Field
                             name="keepMeLoged"
                             component={this.keepMeLoged}/>
-                        <RaisedButton   type="submit" label="Login" primary={true} fullWidth={true}/>
+                        <Button raised  type="submit" label="Login" primary={true} fullWidth={true}/>
                     </form>
                 </Paper>
                 {message}

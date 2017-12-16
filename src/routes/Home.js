@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import Layout from './Layout';
+import Layout from '../components/appShell/Layout';
 
 export default class IndexPage extends Component {
 	constructor(props) {
@@ -9,8 +9,9 @@ export default class IndexPage extends Component {
 	}
 
 	render() {
+        const {token,userData} = this.props
 		return (
-			<Layout title="Home">
+			<Layout title="Home" userData={this.props.userData}>
 				<div id="page-index" className="page">
 
 					<div>

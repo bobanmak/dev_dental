@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from  'react-redux';
 
 
-import Layout from '../Layout'
+import Layout from '../../components/appShell/Layout'
 import MyAccountComponent from '../../components/account/MyAccountComponent'
 import AddDentistComponent from '../../components/account/DentistComponent/DentistComponent'
 import EditDentistRoleComponent from '../../components/account/EditDentistRoleComponent'

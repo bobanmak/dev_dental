@@ -1,62 +1,82 @@
-import React, {Component} from 'react';
-import {getCookie} from '../../utils/cookies';
-import { Link } from 'react-router-dom';
-
+import React from 'react';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import MenuItem from 'material-ui/MenuItem';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import Divider from 'material-ui/Divider';
+import MenuIcon from 'material-ui-icons/Menu';
+import AccountCircle from 'material-ui-icons/AccountCircle';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import styles from './styles'
 
-export default class HeaderAppComponent extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            logged: false,
-            username: ""
-        };
-    }
-
+class HeaderAppComponent extends React.Component {
+    state = {
+        auth: true,
+        anchorEl: null,
+    };
     componentDidMount(){
-       if(getCookie('udata')){
-           const loginCookie=JSON.parse(getCookie('udata'));
-           this.setState({logged:true,username:loginCookie.username})
-       }
+        this.setState({auth:this.props.logged})
     }
 
-    render(){
-            return(
-                <AppBar title={ this.props.title } className="appbar"  iconElementRight={this.state.logged ? <Logged /> : <Login />}/>
-            )
+    handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
 
-        }
-}
-//loged menu
-const Logged = (props) => (
-    <IconMenu
-    {...props}
-    iconButtonElement={
-        <IconButton><MoreVertIcon /></IconButton>
-    }
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-    >
-        <MenuItem primaryText="My Account"  containerElement={<Link to="/my-account" />}  />
-        <MenuItem primaryText="Help" />
-        <MenuItem primaryText="Sign out" />
-    </IconMenu>
-);
-Logged.muiName = 'IconMenu';
-
-class Login extends Component {
-    static muiName = 'FlatButton';
+    handleRequestClose = () => {
+        this.setState({ anchorEl: null });
+    };
 
     render() {
+        const { classes } = this.props;
+        const { auth, anchorEl } = this.state;
+        const open = Boolean(anchorEl);
+
         return (
-            <FlatButton {...this.props} label="Login" />
-    );
+            <div className={classes.root}>
+
+                <AppBar className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography type="title" color="inherit" className={classes.flex}>
+                            Title
+                        </Typography>
+                        {auth && (
+                            <div>
+                                <IconButton
+                                    aria-owns={open ? 'menu-appbar' : null}
+                                    aria-haspopup="true"
+                                    onClick={this.handleMenu}
+                                    color="contrast"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={open}
+                                    onRequestClose={this.handleRequestClose}
+                                >
+                                    <MenuItem onClick={this.handleRequestClose}>Profile</MenuItem>
+                                    <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
+                                </Menu>
+                            </div>
+                        )}
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
     }
 }
+
+export default withStyles(styles)(HeaderAppComponent);
+

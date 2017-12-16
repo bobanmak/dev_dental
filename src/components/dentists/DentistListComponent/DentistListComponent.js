@@ -1,26 +1,22 @@
 import React, {Component} from 'react';
 import _ from 'underscore';
 import {connect} from  'react-redux';
-import {getAllUsers} from '../../actions/dentists';
-import DeleteDentistComponent from './DeleteDentistComponent'
-import DentistToolbar from './toolbar'
-import {deleteUser} from '../../actions/dentists';
+import {getAllUsers} from '../../../actions/dentists/index';
+import DeleteDentistComponent from '../DeleteDentistComponent/DeleteDentistComponent'
+import DentistToolbar from '../toolbar/index'
+import {deleteUser} from '../../../actions/dentists/index';
 import {Link, withRouter} from 'react-router-dom';
+import styles from './styles'
 
 // material-UI and styles
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
+import Tooltip from 'material-ui/Tooltip';
+import {withStyles} from 'material-ui/styles';
 import Snackbar from 'material-ui/Snackbar';
-import Layout from '../../routes/Layout'
-import EditDentist from 'material-ui-icons/AddCircleOutline';
-import DeleteDentis from 'material-ui-icons/RemoveCircleOutline';
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
+import Layout from '../../appShell/Layout'
+import EditDentist from 'material-ui-icons/ModeEdit';
+import DeleteDentis from 'material-ui-icons/Clear';
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 /**
  * DentistListComponent
  * @description Component for displaying all dentists related to the current application
@@ -99,20 +95,28 @@ class DentistListComponent extends Component {
         return _.map(this.props.dentist, (dentist, key) => {
             return (
                 <TableRow key={key}>
-                    <TableRowColumn>{dentist.id}</TableRowColumn>
-                    <TableRowColumn>{dentist.firstName} {dentist.lastName}</TableRowColumn>
-                    <TableRowColumn>{dentist.email}</TableRowColumn>
-                    <TableRowColumn>{dentist.licence}</TableRowColumn>
-                    <TableRowColumn>
-                        <FlatButton icon={<EditDentist />}  primary={true} onClick={() => {
-                            this.openEditScreen(dentist)
-                        }}/>
-                        <FlatButton icon={<DeleteDentis />}
-                                      onClick={() => {
-                                          this.toggleCloseDialog(dentist)
-                                      }}
-                                      secondary={true}/>
-                    </TableRowColumn>
+                    <TableCell>{dentist.id}</TableCell>
+                    <TableCell>{dentist.firstName} {dentist.lastName}</TableCell>
+                    <TableCell>{dentist.email}</TableCell>
+                    <TableCell>{dentist.licence}</TableCell>
+                    <TableCell>
+                        <Tooltip id="tooltip-icon" title="Edit this dentist" placement="bottom">
+                            <Button fab mini color="primary" aria-label="edit" onClick={() => {
+                                this.openEditScreen(dentist)
+                            }}>
+                                <EditDentist/>
+                            </Button>
+                        </Tooltip>
+                        <Tooltip id="tooltip-icon" title="Delete this dentist" placement="bottom">
+                            <Button fab mini color="accent" aria-label="delete"
+                                    onClick={() => {
+                                        this.toggleCloseDialog(dentist)
+                                    }}
+                            >
+                                <DeleteDentis/>
+                            </Button>
+                        </Tooltip>
+                    </TableCell>
                 </TableRow>
 
             )
@@ -125,25 +129,26 @@ class DentistListComponent extends Component {
      * @description Render whole DentistList view
      */
     render() {
+        const {classes} = this.props;
         return (
-            <Layout title="MyAccountComponent page">
+            <Layout title="MyAccountComponent page" userData={this.props.userData} >
                 <DentistToolbar />
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className="col-md-12">
                             <Table
                                 selectable={false}>
-                                <TableHeader
+                                <TableHead
                                     displaySelectAll={false}
                                     adjustForCheckbox={false}>
                                     <TableRow>
-                                        <TableHeaderColumn>ID</TableHeaderColumn>
-                                        <TableHeaderColumn>Dentist Name/Surname</TableHeaderColumn>
-                                        <TableHeaderColumn>Email</TableHeaderColumn>
-                                        <TableHeaderColumn>Licence Number</TableHeaderColumn>
-                                        <TableHeaderColumn>Actions</TableHeaderColumn>
+                                        <TableCell>ID</TableCell>
+                                        <TableCell>Dentist Name/Surname</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Licence Number</TableCell>
+                                        <TableCell>Actions</TableCell>
                                     </TableRow>
-                                </TableHeader>
+                                </TableHead>
                                 <TableBody displayRowCheckbox={false}>
                                     {this.renderUsers()}
                                 </TableBody>
@@ -171,4 +176,4 @@ class DentistListComponent extends Component {
 function mapStateToProps({dentist}) {
     return {dentist}
 }
-export default withRouter(connect(mapStateToProps, {getAllUsers, deleteUser})(DentistListComponent))
+export default withStyles(styles)(withRouter(connect(mapStateToProps, {getAllUsers, deleteUser})(DentistListComponent)))

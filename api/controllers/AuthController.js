@@ -44,6 +44,14 @@ module.exports = {
                         return res.send({
                             message: "Dentist was successfully logged in",
                             logged_in: true,
+                            user_data:{
+                                user_id: users[0].id,
+                                role_id:  users[0].user_role[0].role_id,
+                                firstName: users[0].firstName,
+                                lastName: users[0].lastName,
+                                email: users[0].email,
+                                licence: users[0].licence
+                            },
                             user_id: users[0].id,
                             role_id: users[0].user_role[0].role_id,
                             token: token

@@ -135,9 +135,13 @@ module.exports = {
                                         return res.json({
                                             message: "Dentist was successfully created",
                                             logged_in: true,
-                                            user_id: user.id,
-                                            role_id: roles.role_id,
-                                            message: "User created successfully.You can now login",
+                                            user_data:{
+                                                user_id: user.id,
+                                                role_id: roles.role_id,
+                                                firstName: values.firstName,
+                                                lastName: values.lastName,
+                                                licence: values.licence
+                                            },
                                             logged_in: true,
                                             token: token
                                         });

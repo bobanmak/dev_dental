@@ -6,7 +6,7 @@ import {getSingleUser} from '../../actions/dentists';
 // material-UI and styles
 
 import styles from './style.css';
-import Layout from '../../routes/Layout'
+import Layout from '../appShell/Layout'
 import Paper from 'material-ui/Paper';
 
 class MyAccountComponent extends Component {
@@ -17,24 +17,22 @@ class MyAccountComponent extends Component {
 
     componentDidMount() {
 
-        const {token,userId} = this.props
+        const {token,userData} = this.props
 
-        if (token && userId) this.props.getSingleUser(token,userId);
+        if (token && userData) this.props.getSingleUser(token,userData.user_id);
 
     }
 
-
-
     render() {
-
+        const {token,userData} = this.props
         return (
-            <Layout {...this.props} title="MyAccountComponent page">
+            <Layout userData={userData} title="MyAccountComponent page">
                 <div className="myAccount">
                     <div className={styles.myAccount}>
                         <div className="row">
 
                             <div className="col-md-6">
-                                <Paper zDepth={1} className={styles.myAccountPaper} >
+                                <Paper elevation={1} className={styles.myAccountPaper} >
                                     <div className="row">
                                         <div className="col-md-12">
 

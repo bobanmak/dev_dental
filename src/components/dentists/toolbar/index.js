@@ -1,11 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
+import styles from './styles'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
+import {withStyles} from 'material-ui/styles';
 import AddDentis from 'material-ui-icons/AddCircleOutline';
 import ViewDentis from 'material-ui-icons/Contacts';
 
-export default class DentistToolbar extends React.Component {
+class DentistToolbar extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,13 +17,14 @@ export default class DentistToolbar extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
         return (
-            <Toolbar>
-                <ToolbarGroup>
-                    <FlatButton   icon={<ViewDentis />}  label="View All Dentists" primary={true} containerElement={<Link to="/dentists"/>} />
-                    <FlatButton  icon={<AddDentis />} label="Add New Dentist" primary={true}  containerElement={<Link to="/dentist/add"/>}/>
-                </ToolbarGroup>
-            </Toolbar>
-    );
+            <div>
+                <Button className={classes.button}>View all Dentists</Button>
+                <Button className={classes.button}>Add new Detist</Button>
+            </div>
+        );
     }
 }
+
+export default withStyles(styles)(DentistToolbar);

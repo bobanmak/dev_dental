@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Layout from './Layout';
+import Layout from '../components/appShell/Layout';
 
 export default class Page1 extends Component {
 	constructor(props) {

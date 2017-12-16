@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import {deleteUser} from '../../actions/dentists';
+import {deleteUser} from '../../../actions/dentists/index';
 import {connect} from  'react-redux';
 
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 
 
 
@@ -41,28 +46,24 @@ class DeleteDentistComponent extends Component {
     };
 
     render() {
-        const actions = [
-            <FlatButton
-                label="Cancel"
-                primary={true}
-                onClick={this.props.onDialogClose}
-            />,
-            <FlatButton
-                label="Delete"
-                secondary={true}
-                onClick={this.props.onDialogDelete}
-            />,
-        ];
 
         return (
             <div>
-                <Dialog
-                    title='Delete User'
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                >
-                    Do you really want to delete {this.props.user.email}
+                <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+                    <DialogTitle>Delete  dentist with id {this.props.user.id} ?</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                           Are you sure that you want to do this. This process is irreversable
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.props.onDialogClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.props.onDialogDelete} color="primary" >
+                            Delete
+                        </Button>
+                    </DialogActions>
                 </Dialog>
             </div>
         );

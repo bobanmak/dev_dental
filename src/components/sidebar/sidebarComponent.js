@@ -1,109 +1,88 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {withStyles} from 'material-ui/styles';
+import ListSubheader from 'material-ui/List/ListSubheader';
+import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
+import InboxIcon from 'material-ui-icons/MoveToInbox';
+import DraftsIcon from 'material-ui-icons/Drafts';
+import SendIcon from 'material-ui-icons/Send';
 import Avatar from 'material-ui/Avatar';
-import {deepOrange300,purple500 } from 'material-ui/styles/colors';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import DentistIcon from '../../utils/icons/DentistIcon'
-import styles from './style.css'
-export default class SidebarComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+import styles from './styles'
+import {Link} from 'react-router-dom';
 
+class sidebarComponent extends React.Component {
+    state = {open: true};
+
+    handleClick = () => {
+        this.setState({open: !this.state.open});
+    };
 
     render() {
+        const {classes,userData} = this.props;
 
         return (
-            <Drawer width={250} open={true} zDepth={0}  containerClassName={styles.drawerStyle} >
+            <List className={classes.root} subheader={
+                <ListSubheader>
+                    <Avatar className={classes.purpleAvatar}>D</Avatar>
+                    <h6>Welcome Back <br/> {userData.firstName} {userData.lastName}</h6>
+                </ListSubheader>
+            }>
+                <ListItem button >
+                    <ListItemIcon>
+                        <SendIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Dentists"/>
 
-                <List  className="sidebarDrawer"  >
-                    <div className={styles.sidebarAvatar}>
-                        <Avatar
-                            color={deepOrange300}
-                            backgroundColor={purple500}
-                            size={100}
-                        >
-                            D
-                        </Avatar>
-                        <h5>Welcome User</h5>
-                    </div>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Patients"/>
+                </ListItem>
+                <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Visits"/>
 
-                    <ListItem primaryText="Visits" leftIcon={<ContentSend />}
-                              containerElement={<Link to="/register"/>}/>
-                    <ListItem
-                        primaryText="Patients"
-                        leftIcon={<ContentInbox />}
-                        initiallyOpen={false}
-                        containerElement={<Link to="/my-account"/>}
-                        primaryTogglesNestedList={true}
-                        nestedItems={[
-                            <ListItem
-                                key={1}
-                                primaryText="View Patients"
-                                leftIcon={<ActionGrade />}
-                            />,
-                            <ListItem
-                                key={2}
-                                primaryText="Edit Patient"
-                                leftIcon={<ContentSend />}
-                                disabled={true}
+                </ListItem>
+                <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Add Document"/>
 
-                            />,
-                            <ListItem
-                                key={3}
-                                primaryText="Inbox"
-                                leftIcon={<ContentInbox />}
-                                open={this.state.open}
-                                onNestedListToggle={this.handleNestedListToggle}
+                </ListItem>
+                <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Invoices"/>
 
-                            />,
-                        ]}
-                    />
-                    <ListItem
-                        primaryText="Dentists"
-                        leftIcon={<DentistIcon />}
-                        initiallyOpen={false}
-                        containerElement={<Link to="/dentists"/>}
-                        primaryTogglesNestedList={true}
-                        nestedItems={[
-                            <ListItem
-                                key={1}
-                                primaryText="Add Dentist"
-                                leftIcon={<ActionGrade />}
-                                containerElement={<Link to="/dentists"/>}
-                            />,
-                            <ListItem
-                                key={2}
-                                primaryText="View All Dentists"
-                                leftIcon={<ContentSend />}
-                                containerElement={<Link to="/dentists/add"/>}
-                            />,
-                            <ListItem
-                                key={3}
-                                primaryText="Inbox"
-                                leftIcon={<ContentInbox />}
-                                open={this.state.open}
-                                onNestedListToggle={this.handleNestedListToggle}
+                </ListItem>
+                <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Reports"/>
 
-                            />,
-                        ]}
-                    />
-                    <ListItem
-                        primaryText="My Account"
-                        leftIcon={<ContentInbox />}
-                        initiallyOpen={false}
-                        containerElement={<Link to="/my-account"/>}
-                    />
-                    <ListItem primaryText="Services" leftIcon={<ContentDrafts />}/>
-                    <ListItem primaryText="Billing" leftIcon={<ContentDrafts />}/>
-                </List>
-            </Drawer>
-        )
+                </ListItem>
+                <ListItem button onClick={this.handleClick}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Visits"/>
+
+                </ListItem>
+
+            </List>
+        );
     }
 }
+
+sidebarComponent.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(sidebarComponent);
