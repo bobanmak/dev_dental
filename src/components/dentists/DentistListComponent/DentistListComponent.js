@@ -66,7 +66,6 @@ class DentistListComponent extends Component {
             pathname: '/dentist/edit',
             state: {user: dentist}
         });
-        //this.setState({openDeleteDialog: !this.state.openDeleteDialog, user: dentist, token: this.props.token});
     }
 
     /**
@@ -136,11 +135,8 @@ class DentistListComponent extends Component {
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className="col-md-12">
-                            <Table
-                                selectable={false}>
-                                <TableHead
-                                    displaySelectAll={false}
-                                    adjustForCheckbox={false}>
+                            <Table>
+                                <TableHead>
                                     <TableRow>
                                         <TableCell>ID</TableCell>
                                         <TableCell>Dentist Name/Surname</TableCell>
@@ -149,7 +145,7 @@ class DentistListComponent extends Component {
                                         <TableCell>Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody displayRowCheckbox={false}>
+                                <TableBody>
                                     {this.renderUsers()}
                                 </TableBody>
                             </Table>

@@ -26,7 +26,8 @@ module.exports = {
                     return res.send(
                         {
                             status: res.status,
-                            message: "User with this email not found, please try again"
+                            message: "User with this email not found, please try again",
+                            logged_in:false
                         }
                     );
                 }
@@ -59,7 +60,8 @@ module.exports = {
 
                     } else {
                         const invalid_pass = {
-                            message: "Incorrect password, please try again"
+                            message: "Incorrect password, please try again",
+                            logged_in:false
                         };
                         return res.send(invalid_pass);
                     }

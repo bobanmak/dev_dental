@@ -25,7 +25,7 @@ class EditDentistComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialValues:{},
+            initialValues: {},
             countries: "",
             roles: "",
             redirect: false,
@@ -36,10 +36,9 @@ class EditDentistComponent extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         this.setState({countries: COUNTRIES_LIST})
         this.props.getUserRoles();
-        this.setState({initialValues:this.props.location.state.user})
+        this.setState({initialValues: this.props.location.state.user})
 
     }
 
@@ -86,13 +85,13 @@ class EditDentistComponent extends Component {
     }
 
     onSubmit(values,) {
-        this.props.updateUser(this.props.token, values,this.state.initialValues.id);
+        this.props.updateUser(this.props.token, values, this.state.initialValues.id);
 
     }
 
     render() {
-        const {handleSubmit,classes} = this.props;
-         let message = null;
+        const {handleSubmit, classes} = this.props;
+        let message = null;
         if (this.props.dentist.message) {
             message = <Snackbar
                 open={true}
@@ -105,7 +104,7 @@ class EditDentistComponent extends Component {
             }.bind(this), 1000);
         }
         return (
-            <Layout title="MyAccountComponent page" userData={this.props.userData} >
+            <Layout title="MyAccountComponent page" userData={this.props.userData}>
                 <DentistToolbar />
                 <div className={classes.root}>
                     <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -193,7 +192,7 @@ class EditDentistComponent extends Component {
                                 </Field>
                             </Grid>
                         </Grid>
-                        <Button raised type="submit" color="primary"> Add new Dentist </Button>
+                        <Button raised type="submit" color="primary"> Edit Dentist </Button>
                     </form>
                     {message}
                 </div>
@@ -244,7 +243,7 @@ function validate(values) {
     //if errors is !empty there is something wrong
     return errors;
 }
-function mapStateToProps({dentistRole,dentist},ownProps) {
+function mapStateToProps({dentistRole, dentist}, ownProps) {
 
     return {
         initialValues: ownProps.location.state.user,

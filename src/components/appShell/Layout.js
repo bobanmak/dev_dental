@@ -5,20 +5,16 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import SidebarController from '../sidebar/sidebarComponent'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
-import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import styles from './styles'
 class ResponsiveDrawer extends React.Component {
     state = {
         mobileOpen: false,
     };
-    componentDidMount(){
-        console.log(this.props)
-    }
+
     handleDrawerToggle = () => {
         this.setState({ mobileOpen: !this.state.mobileOpen });
     };

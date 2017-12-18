@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Layout from '../../components/appShell/Layout';
 import LoginComponent from '../../components/auth/LoginComponent/LoginComponent';
 export default class Login extends Component {
     constructor(props) {
@@ -7,13 +6,13 @@ export default class Login extends Component {
 
     }
     componentDidMount(){
-        console.log(this.props)
+
     }
     render() {
         return (
-            <Layout title="Login page">
+           <div>
                 <LoginComponent></LoginComponent>
-            </Layout>);
+            </div>);
     }
 }
 

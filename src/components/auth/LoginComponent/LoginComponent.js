@@ -2,36 +2,34 @@ import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from  'react-redux';
 import {userLogin} from '../../../actions';
-
 import _ from 'underscore'
 // material-UI and styles
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
+import { Redirect } from 'react-router'
+import {FormControl, FormHelperText,FormControlLabel} from 'material-ui/Form';
+import Input, {InputLabel} from 'material-ui/Input';
 import styles from './style.css';
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
 import Snackbar from 'material-ui/Snackbar';
 class LoginComponent extends Component {
-    constructor(props) {
-        super(props);
+    constructor(props,contex) {
+        super(props,contex);
         this.state = {open: false};
 
-    }
-
-    componentDidMount(){
-        console.log(this.props)
     }
 
     renderField(field) {
         return (
             <div>
-                <TextField
-                    hintText={field.hint}
-                    floatingLabelText={field.label}
-                    errorText={field.meta.touched ? field.meta.error : ""}
-                    fullWidth={true}
-                    {...field.input}
-                />
+                <FormControl fullWidth error={field.meta.touched && field.meta.error ? true : false}>
+                    <InputLabel htmlFor="amount">{field.label}</InputLabel>
+                    <Input
+                        fullWidth={true}
+                        {...field.input}
+                    />
+                    <FormHelperText>{field.meta.touched ? field.meta.error : ""}</FormHelperText>
+                </FormControl>
             </div>
 
         )
@@ -40,10 +38,15 @@ class LoginComponent extends Component {
     keepMeLoged(field) {
         return (
             <div>
-                <Checkbox
-                    label="Keep Me loged In"
-                    {...field.input}
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            {...field.input}
+                        />
+                    }
+                    label="Keep me logged in"
                 />
+
             </div>
         )
     }
@@ -66,11 +69,13 @@ class LoginComponent extends Component {
                 onRequestClose={this.handleRequestClose}
             />
 
-            this.props.login.message = null;
-
         }
-        if(!_.isEmpty(this.props.login)) return( window.location.href="/")
 
+        if(this.props.login.logged_in) {
+            setTimeout(function () {
+              window.location.href='/'
+            }.bind(this), 1000);
+        }
 
         return (
             <div>
@@ -90,7 +95,7 @@ class LoginComponent extends Component {
                         <Field
                             name="keepMeLoged"
                             component={this.keepMeLoged}/>
-                        <Button raised  type="submit" label="Login" primary={true} fullWidth={true}/>
+                        <Button raised  type="submit"  color="primary"  className={styles.loginButton}>Log me in </Button>
                     </form>
                 </Paper>
                 {message}

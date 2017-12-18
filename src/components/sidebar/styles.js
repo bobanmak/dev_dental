@@ -5,18 +5,21 @@ const styles = theme => ({
     root: {
         width: '100%',
         maxWidth: 500,
-        height:'100vh',
-        background:grey[100],
+        height: '100vh',
+        background: grey[100],
     },
     nested: {
         paddingLeft: theme.spacing.unit * 4,
     },
+    centeredText: {
+        textAlign: 'center',
+    },
     avatar: {
-        margin: 10,
+
     },
     purpleAvatar: {
-        margin: 10,
-        textAlign:'center',
+        margin: '10px auto',
+        textAlign: 'center',
         color: '#fff',
         backgroundColor: deepPurple[500],
     },

@@ -66,6 +66,7 @@ class AppRoutes extends Component {
                         <RouteAuth exact canAccess={this.state.access} path="/" token={this.state.token}
                                    userData={this.state.userData}
                                    component={Home}/>
+                        <Route exact path="/login" component={Login}/>
                         <Route path="*" component={NotFound}/>
                     </Switch>
                 </div>
