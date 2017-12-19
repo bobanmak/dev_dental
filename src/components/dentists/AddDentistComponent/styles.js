@@ -10,6 +10,10 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         minWidth: 120,
     },
+    close: {
+        width: theme.spacing.unit * 4,
+        height: theme.spacing.unit * 4,
+    },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },

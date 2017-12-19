@@ -66,11 +66,9 @@ export function addUser(token, values) {
 
     return (dispatch) => {
         request.then(({data}) => {
-            console.log(data)
             dispatch({type: ADD_USER, payload: data})
         }).catch((error) => {
-            console.log(error)
-            dispatch({type: ADD_USER, payload: error})
+            dispatch({type: ADD_USER, payload: error.response, status: error.response.status})
         });
     }
 

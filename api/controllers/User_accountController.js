@@ -32,10 +32,10 @@ module.exports = {
                     address: users[0].address,
                     city: users[0].city,
                     country: users[0].country,
-                    phoneNumber: users[0].phoneNumber,
-                    mobileNumber: users[0].mobileNumber,
-                    licence: users[0].licence,
-                    licenceNumber: users[0].licenceNumber
+                    phoneNumber: users[0].phoneNumber.toString(),
+                    mobileNumber: users[0].mobileNumber.toString(),
+                    licence: users[0].licence.toString(),
+                    licenceNumber: users[0].licenceNumber.toString()
                 };
                 return res.json(acc);
             });
@@ -89,8 +89,10 @@ module.exports = {
                     return res.negotiate(err);
                 }
                 if (users.length) {
-                    res.status(400);
-                    return res.json({mesage: 'User already exists!'});
+                    return res.json({
+                        status:400,
+                        message: 'User already exists!'
+                    });
                 } else {
 
                     //create password salt and hash and store data in database
@@ -112,21 +114,24 @@ module.exports = {
                             }
                             User_account.create(user_acc, function (err, user) {
                                 if (err) {
-                                    res.status(400);
-                                    return res.json({message: 'Server error occured.Please try again later'});
-
+                                    res.status(500)
+                                    return res.json({
+                                        status: 500,
+                                        message: err.message,
+                                    });
                                 } else {
-
                                     const roles = {
                                         user_account_id: user.id,
                                         role_id: values.role
                                     }
                                     User_has_role.create(roles, function (err, roles) {
                                         if (err) {
-                                            res.status(400);
-                                            return res.json({message: 'Server error occured.Please try again later',err_message:err});
+                                            res.status(500)
+                                            return res.json({
+                                                status: 500,
+                                                message: err.message,
+                                            });
                                         }
-
                                         const response_message = {
                                             user_id: user.id,
                                             role_id: roles.role_id,
@@ -134,6 +139,7 @@ module.exports = {
                                             email: user.email
                                         }
                                         return res.json({
+                                            status:200,
                                             message: "Dentist was successfully created",
                                             logged_in: true
                                         });
@@ -179,16 +185,24 @@ module.exports = {
                 User_account.update({id: userId}, updatedUser).exec(function afterwards(err, updated) {
 
                     if (err) {
-                        return res.negotiate(err);
+                        res.status(500)
+                        return res.json({
+                            status: 500,
+                            message: err.message,
+                        });
                     }
                     User_has_role.update({user_account_id: userId}, {role_id: values.role}).exec(function afterwards(err, updated) {
                         if (err) {
-                            return res.negotiate(err);
+                            res.status(500)
+                            return res.json({
+                                status: 500,
+                                message: err.message,
+                            });
                         }
 
                         return res.json({
+                            status: 200,
                             message: 'Dentist was successfully updated',
-                            status: 200
                         });
                     })
 

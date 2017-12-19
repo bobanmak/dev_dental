@@ -34,13 +34,13 @@ module.exports = {
             type: 'string'
         },
         phoneNumber: {
-            type: 'numeric'
+            type: 'float'
         },
         mobileNumber: {
-            type: 'numeric'
+            type: 'float'
         },
         licence: {
-            type: 'numeric'
+            type: 'integer'
         },
         password: {
             type: 'string'

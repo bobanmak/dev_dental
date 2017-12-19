@@ -14,6 +14,8 @@ import {withRouter} from 'react-router-dom'
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import {withStyles} from 'material-ui/styles';
 import Select from 'material-ui/Select';
 import styles from './styles';
@@ -33,6 +35,7 @@ class AddDentistComponent extends Component {
         super(props);
         this.state = {
             value: "",
+            open:false,
             countries: "",
             roles: "",
             role: '',
@@ -52,6 +55,15 @@ class AddDentistComponent extends Component {
     handleChange = input => event => {
         this.setState({[input.name]: event.target.value});
         input.onChange(event.target.value)
+    };
+    handleClick = () => {
+        this.setState({ open: true });
+    };
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({ open: false });
     };
 
     renderField(field) {
@@ -92,23 +104,41 @@ class AddDentistComponent extends Component {
     }
 
     onSubmit(values) {
-        console.log(values)
+
         this.props.addUser(this.props.token, values);
+        this.setState({open:true})
     }
 
     render() {
         const {handleSubmit, classes} = this.props;
+
         let message = null;
         if (this.props.dentist.message) {
             message = <Snackbar
-                open={true}
-                message={this.props.dentist.message}
-                autoHideDuration={1000}
-                onRequestClose={this.handleRequestClose}
-            />
-            setTimeout(function () {
-                this.props.history.push('/dentists')
-            }.bind(this), 1000);
+                    open={this.state.open}
+                    autoHideDuration={1000}
+                    onRequestClose={this.handleClose}
+                    SnackbarContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{this.props.dentist.message}</span>}
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.handleClose}
+                        >
+                            <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
+            if(this.props.dentist.status!=500 && this.props.dentist.status!=400){
+                 setTimeout(function () {
+                     this.props.history.push('/dentists')
+                }.bind(this), 1000);
+            }
         }
         return (
             <Layout title="MyAccountComponent page" userData={this.props.userData}>
@@ -203,7 +233,9 @@ class AddDentistComponent extends Component {
                     </form>
                     {message}
                 </div>
+                <div>
 
+                </div>
             </Layout>
         );
     }
