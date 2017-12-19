@@ -10,8 +10,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 
-
-
 /**
  * DeleteDentistComponent
  * @description Component for displaying modal dialog for removing dentist

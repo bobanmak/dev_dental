@@ -110,10 +110,11 @@ module.exports = {
                                 password: hash,
                                 password_salt: salt,
                             }
-
                             User_account.create(user_acc, function (err, user) {
                                 if (err) {
-                                    return res.negotiate(err);
+                                    res.status(400);
+                                    return res.json({message: 'Server error occured.Please try again later'});
+
                                 } else {
 
                                     const roles = {
@@ -122,7 +123,8 @@ module.exports = {
                                     }
                                     User_has_role.create(roles, function (err, roles) {
                                         if (err) {
-                                            return res.negotiate(err);
+                                            res.status(400);
+                                            return res.json({message: 'Server error occured.Please try again later',err_message:err});
                                         }
 
                                         const response_message = {
@@ -131,19 +133,9 @@ module.exports = {
                                             username: user.username,
                                             email: user.email
                                         }
-                                        var token = jwt.sign(response_message, sails.config.api_config.secret_key);
                                         return res.json({
                                             message: "Dentist was successfully created",
-                                            logged_in: true,
-                                            user_data:{
-                                                user_id: user.id,
-                                                role_id: roles.role_id,
-                                                firstName: values.firstName,
-                                                lastName: values.lastName,
-                                                licence: values.licence
-                                            },
-                                            logged_in: true,
-                                            token: token
+                                            logged_in: true
                                         });
                                     })
 

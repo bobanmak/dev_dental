@@ -20,8 +20,15 @@ import styles from './styles';
 import {FormControl, FormHelperText} from 'material-ui/Form';
 import Input, {InputLabel} from 'material-ui/Input';
 import {MenuItem} from 'material-ui/Menu';
-
+/**
+ * AddDentistComponent
+ * @description Component with form for adding new dentsits
+ */
 class AddDentistComponent extends Component {
+    /**
+     * constructor
+     * @description Constructor for initialazing properties and state
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -33,7 +40,10 @@ class AddDentistComponent extends Component {
         };
 
     }
-
+    /**
+     * componentDidMount
+     * @description Will get countries and roles before the initial rendering
+     */
     componentDidMount() {
         this.setState({countries: COUNTRIES_LIST})
         this.props.getUserRoles();
@@ -71,7 +81,7 @@ class AddDentistComponent extends Component {
 
     renderRoleValues(selectValues) {
         return _.map(selectValues, function (roles) {
-            return <MenuItem key={roles.id} value={roles.role_name}>{roles.role_name}</MenuItem>
+            return <MenuItem key={roles.id} value={roles.id}>{roles.role_name}</MenuItem>
         })
     }
 
@@ -82,11 +92,11 @@ class AddDentistComponent extends Component {
     }
 
     onSubmit(values) {
+        console.log(values)
         this.props.addUser(this.props.token, values);
     }
 
     render() {
-
         const {handleSubmit, classes} = this.props;
         let message = null;
         if (this.props.dentist.message) {
@@ -144,7 +154,7 @@ class AddDentistComponent extends Component {
                             <Grid item xs={12} sm={4}>
                                 <Field
                                     label="Street Address"
-                                    name="streetAddress"
+                                    name="address"
                                     hint="Enter your current living address"
                                     component={this.renderField}/>
                             </Grid>

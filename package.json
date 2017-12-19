@@ -59,7 +59,7 @@
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.1",
 		"redux-promise": "^0.5.3",
-		"redux-thunk": "^2.1.0",
+		"redux-thunk": "^2.2.0",
 		"sails": "~0.12.9",
 		"sails-disk": "~0.10.9",
 		"sails-mysql": "^0.11.5",

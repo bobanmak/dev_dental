@@ -58,14 +58,22 @@ export function getAllUsers(token) {
  */
 
 export function addUser(token, values) {
+
     const request = axios.post(`/api/v1/users/`, {
-            utoken: token,
-            values: values
+        utoken: token,
+        values: values
     })
-    return {
-        type: ADD_USER,
-        payload: request
+
+    return (dispatch) => {
+        request.then(({data}) => {
+            console.log(data)
+            dispatch({type: ADD_USER, payload: data})
+        }).catch((error) => {
+            console.log(error)
+            dispatch({type: ADD_USER, payload: error})
+        });
     }
+
 }
 
 /**
@@ -98,12 +106,12 @@ export function updateUser(token, values, id) {
  * @returns :: {object} DELETE_USER
  */
 
-export function deleteUser(token, id,callback) {
+export function deleteUser(token, id, callback) {
     const request = axios.delete(`/api/v1/users/${id}`, {
         params: {
             utoken: token
         }
-    }).then((response)=>callback(response))
+    }).then((response) => callback(response))
     return {
         type: DELETE_USER,
         payload: request

@@ -8,6 +8,7 @@ export default function(state={},action){
         case GET_ALL_USERS:
             return action.payload.data
         case ADD_USER:
+            console.log(action.payload)
             return action.payload.data
         case UPDATE_USER:
             return action.payload.data

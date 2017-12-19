@@ -25,12 +25,9 @@ class EditDentistComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialValues: {},
             countries: "",
-            roles: "",
-            redirect: false,
-            role: '',
-            country: ''
+            role: "",
+            country: ""
         };
 
     }
@@ -38,9 +35,9 @@ class EditDentistComponent extends Component {
     componentDidMount() {
         this.setState({countries: COUNTRIES_LIST})
         this.props.getUserRoles();
-        this.setState({initialValues: this.props.location.state.user})
 
     }
+
 
     handleChange = input => event => {
         this.setState({[input.name]: event.target.value});
@@ -74,24 +71,31 @@ class EditDentistComponent extends Component {
 
     renderRoleValues(selectValues) {
         return _.map(selectValues, function (roles) {
-            return <MenuItem key={roles.id} value={roles.role_name}>{roles.role_name}</MenuItem>
+            return <MenuItem key={roles.id} value={roles.id}>{roles.role_name}</MenuItem>
         })
     }
 
     renderCountryValues(selectValues) {
         return _.map(selectValues, function (country) {
-            return <MenuItem key={country.code} value={country.name}>{country.name} </MenuItem>
+            return <MenuItem key={country.code} value={country.name}>{country.name}</MenuItem>
         })
     }
 
-    onSubmit(values,) {
-        this.props.updateUser(this.props.token, values, this.state.initialValues.id);
+    onSubmit(values) {
+        const {token,initialValues} = this.props
 
+        this.props.updateUser(this.props.token, values, this.props.initialValues.id);
     }
 
     render() {
-        const {handleSubmit, classes} = this.props;
-        let message = null;
+        const {handleSubmit, initialValues,classes} = this.props;
+        let message = null
+        let initCountry,initRole = null
+
+        initCountry=this.state.country===""?initialValues.country :this.state.country;
+
+        initRole=this.state.role===""?initialValues.user_role.role_id :this.state.role;
+
         if (this.props.dentist.message) {
             message = <Snackbar
                 open={true}
@@ -159,7 +163,7 @@ class EditDentistComponent extends Component {
                                     component={this.renderField}/>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Field name="country" stValue={this.state.country} component={this.renderSelectField}
+                                <Field name="country" stValue={initCountry} component={this.renderSelectField}
                                        label="Select Country">
                                     {this.renderCountryValues(this.state.countries)}
                                 </Field>
@@ -186,7 +190,7 @@ class EditDentistComponent extends Component {
                                     component={this.renderField}/>
                             </Grid>
                             <Grid item xs={6} sm={6}>
-                                <Field name="role" component={this.renderSelectField} stValue={this.state.role}
+                                <Field name="role" component={this.renderSelectField} stValue={initRole}
                                        label="Select Role">
                                     {this.renderRoleValues(this.props.dentistRole)}
                                 </Field>
