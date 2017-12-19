@@ -5,8 +5,8 @@ import styles from './styles'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import {withStyles} from 'material-ui/styles';
 import AddDentis from 'material-ui-icons/AddCircleOutline';
-import ViewDentis from 'material-ui-icons/Contacts';
-
+import ViewDentist from 'material-ui-icons/Contacts';
+import {withRouter} from 'react-router-dom'
 class DentistToolbar extends React.Component {
 
     constructor(props) {
@@ -16,15 +16,26 @@ class DentistToolbar extends React.Component {
         };
     }
 
+    /**
+     * handleClick
+     * @description Will redirect to the correct path using the react-router WithRouter history method
+     * @param value The path in which you want to redirect the user to
+     */
+    handleClick(value) {
+        if (value) {
+            this.props.history.push(value);
+        }
+    }
     render() {
         const {classes} = this.props;
         return (
-            <div>
-                <Button className={classes.button}>View all Dentists</Button>
-                <Button className={classes.button}>Add new Detist</Button>
+            <div className={classes.appToolbar}>
+
+                <Button  onClick={()=>{this.handleClick('/dentists')}} className={classes.button}><ViewDentist  className={classes.btnIcons}/>  View all Dentists</Button>
+                <Button onClick={()=>{this.handleClick('/dentist/add')}} className={classes.button}><AddDentis className={classes.btnIcons}/>Add new Dentist</Button>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(DentistToolbar);
+export default withRouter(withStyles(styles)(DentistToolbar));
