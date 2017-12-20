@@ -34,8 +34,7 @@ module.exports = {
                     country: users[0].country,
                     phoneNumber: users[0].phoneNumber,
                     mobileNumber: users[0].mobileNumber,
-                    licence: users[0].licence,
-                    licenceNumber: users[0].licenceNumber,
+                    licence: users[0].licence
                 };
                 return res.json(acc);
             });

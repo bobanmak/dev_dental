@@ -36,8 +36,12 @@ class EditDentistComponent extends Component {
         this.setState({countries: COUNTRIES_LIST})
         this.props.getUserRoles();
 
-    }
 
+    }
+    componentWillReceiveProps(nextProps) {
+        const locationChanged = nextProps.location !== this.props.location
+        console.log(locationChanged)
+    }
 
     handleChange = input => event => {
         this.setState({[input.name]: event.target.value});
@@ -84,7 +88,7 @@ class EditDentistComponent extends Component {
     onSubmit(values) {
         const {token,initialValues} = this.props
 
-        this.props.updateUser(this.props.token, values, this.props.initialValues.id);
+        this.props.updateUser(token, values, initialValues.id);
     }
 
     render() {
@@ -92,6 +96,9 @@ class EditDentistComponent extends Component {
         let message = null
         let initCountry,initRole = null
 
+        /*
+        * hotfix for displaying country and role when redirected from DentistListComponent
+        * */
         initCountry=this.state.country===""?initialValues.country :this.state.country;
 
         initRole=this.state.role===""?initialValues.user_role.role_id :this.state.role;
@@ -151,7 +158,7 @@ class EditDentistComponent extends Component {
                             <Grid item xs={12} sm={4}>
                                 <Field
                                     label="Street Address"
-                                    name="streetAddress"
+                                    name="address"
                                     hint="Enter your current living address"
                                     component={this.renderField}/>
                             </Grid>

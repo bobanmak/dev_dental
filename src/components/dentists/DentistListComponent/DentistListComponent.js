@@ -1,23 +1,19 @@
 import React, {Component} from 'react';
-import _ from 'underscore';
 import {connect} from  'react-redux';
 import {getAllUsers} from '../../../actions/dentists/index';
 import DeleteDentistComponent from '../DeleteDentistComponent/DeleteDentistComponent'
 import DentistToolbar from '../toolbar/index'
 import {deleteUser} from '../../../actions/dentists/index';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import styles from './styles'
 
 import ListTableComponent from './DentistListTableComponent'
 // material-UI and styles
-import Button from 'material-ui/Button';
-import Tooltip from 'material-ui/Tooltip';
+
 import {withStyles} from 'material-ui/styles';
 import Snackbar from 'material-ui/Snackbar';
 import Layout from '../../appShell/Layout'
-import EditDentist from 'material-ui-icons/ModeEdit';
-import DeleteDentis from 'material-ui-icons/Clear';
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+
 /**
  * DentistListComponent
  * @description Component for displaying all dentists related to the current application
@@ -30,7 +26,7 @@ class DentistListComponent extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: '',data:[]};
+        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: '', data: []};
     }
 
     /**
@@ -39,6 +35,7 @@ class DentistListComponent extends Component {
      */
     componentDidMount() {
         const {token} = this.props
+
         /**
          * @type {function}
          * @param {string} token
@@ -52,7 +49,7 @@ class DentistListComponent extends Component {
      * @description Will close the dialog
      * @param {object} dentist
      */
-    toggleCloseDialog(dentist) {
+    toggleCloseDialog=(dentist)=> {
         this.setState({openDeleteDialog: !this.state.openDeleteDialog, user: dentist, token: this.props.token});
     }
 
@@ -61,7 +58,7 @@ class DentistListComponent extends Component {
      * @description Redirect to the edit component located in 'components/dentists/EditDentistComponent' and pass dentist data as parameter
      * @param {object} dentist
      */
-    openEditScreen(dentist) {
+    openEditScreen = (dentist) => {
         this.props.history.push({
             pathname: '/dentist/edit',
             state: {user: dentist}
@@ -69,11 +66,11 @@ class DentistListComponent extends Component {
     }
 
     /**
-     * toggleCloseDialog
+     * toggleDeleteDialog
      * @description Will close the dialog
      * @param {object} dentist
      */
-    toggleDeleteDialog(dentist) {
+    toggleDeleteDialog = () => {
         this.props.deleteUser(this.state.token, this.state.user.id, (message) => {
             if (message.status === 200) {
                 this.setState({resMessage: message.data.message})
@@ -91,14 +88,16 @@ class DentistListComponent extends Component {
      * @description Render whole DentistList view
      */
     render() {
-        const {classes} = this.props;
+        const {dentist,userData} = this.props;
+
         return (
-            <Layout title="MyAccountComponent page" userData={this.props.userData} >
+            <Layout title="MyAccountComponent page" userData={userData}>
                 <DentistToolbar />
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className="col-md-12">
-                            <ListTableComponent data={this.props.dentist} order="asc" rowsPerPage={5} />
+                            <ListTableComponent data={dentist} order="asc" editData={this.openEditScreen}
+                                                deleteData={this.toggleCloseDialog} rowsPerPage={5}/>
                             {this.state.openDeleteDialog ?
                                 <DeleteDentistComponent token={this.state.token} user={this.state.user}
                                                         onDialogDelete={this.toggleDeleteDialog.bind(this)}
@@ -106,7 +105,8 @@ class DentistListComponent extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.resMessage ? <Snackbar open={true} message={this.state.resMessage} autoHideDuration={4000}/> : null}
+                {this.state.resMessage ?
+                    <Snackbar open={true} message={this.state.resMessage} autoHideDuration={4000}/> : null}
             </Layout>
         );
     }

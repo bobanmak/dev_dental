@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import keycode from 'keycode';
 import { CircularProgress } from 'material-ui/Progress';
-
 import _ from 'underscore';
 import Table, {
     TableBody,
@@ -34,6 +33,7 @@ const styles = theme => ({
 });
 
 class ListTableComponent extends React.Component {
+
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -74,28 +74,6 @@ class ListTableComponent extends React.Component {
     };
 
 
-    handleClick = (event, id) => {
-        const { selected } = this.state;
-        console.log(selected)
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        this.setState({ selected: newSelected });
-    };
-
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
@@ -107,8 +85,9 @@ class ListTableComponent extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const {data} = this.props
-        if (_.isEmpty(data)){
+        const {data,editData,deleteData} = this.props
+
+        if (_.isEmpty(data) || data.message){
            return  <CircularProgress className={classes.progress} size={50} />
         }
         const { order, orderBy, selected, rowsPerPage, page } = this.state;
@@ -140,7 +119,7 @@ class ListTableComponent extends React.Component {
                                         <TableCell>
                                             <Tooltip id="tooltip-icon" title="Edit this dentist" placement="bottom">
                                                 <Button  mini color="primary" aria-label="edit" onClick={() => {
-                                                    //this.openEditScreen(dentist)
+                                                    editData(n)
                                                 }}>
                                                     <EditDentist/>
                                                 </Button>
@@ -148,7 +127,7 @@ class ListTableComponent extends React.Component {
                                             <Tooltip id="tooltip-icon" title="Delete this dentist" placement="bottom">
                                                 <Button  mini color="accent" aria-label="delete"
                                                         onClick={() => {
-                                                            //this.toggleCloseDialog(dentist)
+                                                           deleteData(n)
                                                         }}
                                                 >
                                                     <DeleteDentis/>

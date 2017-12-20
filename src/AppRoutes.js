@@ -52,16 +52,18 @@ class AppRoutes extends Component {
                         <RouteAuth exact canAccess={this.state.access} path="/my-account" token={this.state.token}
                                    userData={this.state.userData}
                                    component={MyAccountComponent}/>
-                        //dentist related components
-                        <RouteAuth exact canAccess={this.state.access} path="/dentists" token={this.state.token}
-                                   userData={this.state.userData}
-                                   component={DentistListComponent}/>
+
                         <RouteAuth exact canAccess={this.state.access} path="/dentist/add" token={this.state.token}
                                    userData={this.state.userData}
                                    component={AddDentistComponent}/>
 
-                        <RouteAuth exact canAccess={this.state.access} path="/dentist/edit" token={this.state.token}  userData={this.state.userData}
+                        <RouteAuth  canAccess={this.state.access} path="/dentist/edit" token={this.state.token}  userData={this.state.userData}
                                    component={EditDentistComponent}/>
+
+                        //dentist related components
+                        <RouteAuth exact canAccess={this.state.access} path="/dentists" token={this.state.token}
+                                   userData={this.state.userData}
+                                   component={DentistListComponent}/>
                         //auth routes
                         <RouteAuth exact canAccess={this.state.access} path="/" token={this.state.token}
                                    userData={this.state.userData}
