@@ -8,6 +8,7 @@ import {deleteUser} from '../../../actions/dentists/index';
 import {Link, withRouter} from 'react-router-dom';
 import styles from './styles'
 
+import ListTableComponent from './DentistListTableComponent'
 // material-UI and styles
 import Button from 'material-ui/Button';
 import Tooltip from 'material-ui/Tooltip';
@@ -29,7 +30,7 @@ class DentistListComponent extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: ''};
+        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: '',data:[]};
     }
 
     /**
@@ -38,7 +39,6 @@ class DentistListComponent extends Component {
      */
     componentDidMount() {
         const {token} = this.props
-
         /**
          * @type {function}
          * @param {string} token
@@ -87,43 +87,6 @@ class DentistListComponent extends Component {
     }
 
     /**
-     * renderUsers
-     * @description Render list of table with all users
-     */
-    renderUsers() {
-        return _.map(this.props.dentist, (dentist, key) => {
-            return (
-                <TableRow key={key}>
-                    <TableCell>{dentist.id}</TableCell>
-                    <TableCell>{dentist.firstName} {dentist.lastName}</TableCell>
-                    <TableCell>{dentist.email}</TableCell>
-                    <TableCell>{dentist.licence}</TableCell>
-                    <TableCell>
-                        <Tooltip id="tooltip-icon" title="Edit this dentist" placement="bottom">
-                            <Button fab mini color="primary" aria-label="edit" onClick={() => {
-                                this.openEditScreen(dentist)
-                            }}>
-                                <EditDentist/>
-                            </Button>
-                        </Tooltip>
-                        <Tooltip id="tooltip-icon" title="Delete this dentist" placement="bottom">
-                            <Button fab mini color="accent" aria-label="delete"
-                                    onClick={() => {
-                                        this.toggleCloseDialog(dentist)
-                                    }}
-                            >
-                                <DeleteDentis/>
-                            </Button>
-                        </Tooltip>
-                    </TableCell>
-                </TableRow>
-
-            )
-        })
-    }
-
-
-    /**
      * render
      * @description Render whole DentistList view
      */
@@ -135,20 +98,7 @@ class DentistListComponent extends Component {
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className="col-md-12">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>ID</TableCell>
-                                        <TableCell>Dentist Name/Surname</TableCell>
-                                        <TableCell>Email</TableCell>
-                                        <TableCell>Licence Number</TableCell>
-                                        <TableCell>Actions</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.renderUsers()}
-                                </TableBody>
-                            </Table>
+                            <ListTableComponent data={this.props.dentist} order="asc" rowsPerPage={5} />
                             {this.state.openDeleteDialog ?
                                 <DeleteDentistComponent token={this.state.token} user={this.state.user}
                                                         onDialogDelete={this.toggleDeleteDialog.bind(this)}
@@ -156,8 +106,7 @@ class DentistListComponent extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.resMessage ?
-                    <Snackbar open={true} message={this.state.resMessage} autoHideDuration={4000}/> : null}
+                {this.state.resMessage ? <Snackbar open={true} message={this.state.resMessage} autoHideDuration={4000}/> : null}
             </Layout>
         );
     }

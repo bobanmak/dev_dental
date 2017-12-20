@@ -32,10 +32,10 @@ module.exports = {
                     address: users[0].address,
                     city: users[0].city,
                     country: users[0].country,
-                    phoneNumber: users[0].phoneNumber.toString(),
-                    mobileNumber: users[0].mobileNumber.toString(),
-                    licence: users[0].licence.toString(),
-                    licenceNumber: users[0].licenceNumber.toString()
+                    phoneNumber: users[0].phoneNumber,
+                    mobileNumber: users[0].mobileNumber,
+                    licence: users[0].licence,
+                    licenceNumber: users[0].licenceNumber,
                 };
                 return res.json(acc);
             });
