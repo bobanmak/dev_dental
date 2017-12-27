@@ -16,6 +16,19 @@ const styles = theme => ({
         },
 
     },
+    navIconHide: {
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
+    },
+    appBar: {
+        position: 'fixed',
+        marginLeft: drawerWidth,
+        [theme.breakpoints.up('md')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+        },
+
+    },
 });
 
 export default styles

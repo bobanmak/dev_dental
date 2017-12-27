@@ -1,38 +1,27 @@
 /**
  * PatientController
  *
- * @description :: Server-side logic for managing Patients in the application
+ * @description :: Server-side logic for managing Patient in the application
  *
  */
-
+const jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 const _ = require('underscore');
 module.exports = {
     /**
-     * @function :: getSinglePatient
+     * @function :: getSingleAccount
      *
      * @description :: Retrives all data from the given patient id
      * @param :: {number} id
-     * @returns :: {object} singlePatientData
+     * @returns :: {object} acc
      */
     getSinglePatient: function (req, res) {
         const params = req.params.all();
-        const decoded = req.session.tokenData;
         Patient.find({id: params.id})
-            .exec(function (err, users) {
+            .exec(function (err, patients) {
                 if (err) res.serverError(err);
-                const singlePatientData = {
-                    id: users[0].id,
-                    email: users[0].email,
-                    firstName: users[0].firstName,
-                    lastName: users[0].lastName,
-                    address: users[0].address,
-                    city: users[0].city,
-                    country: users[0].country,
-                    phoneNumber: users[0].phoneNumber,
-                    mobileNumber: users[0].mobileNumber,
-                    identificationNumber: users[0].identificationNumber
-                };
-                return res.json(singlePatientData);
+                return res.json(patients);
             });
 
     },
@@ -40,45 +29,93 @@ module.exports = {
     /**
      * @function :: getAllPatients
      *
-     * @description :: Retrives all data from all users
+     * @description :: Retrives all data from all patients
      * @param :: {object}
-     * @returns :: {object} allPatientData
+     * @returns :: {object} allPatients
      */
     getAllPatients: function (req, res) {
-        Patient.find().exec(function (err, patients) {
-            if (err) res.serverError(err);
-            const allPatientData = _.map(patients, function (patient) {
-                return ({
-                    id: patient.id,
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    address: user.address,
-                    city: user.city,
-                    country: user.country,
-                    phoneNumber: user.phoneNumber,
-                    mobileNumber: user.mobileNumber,
-                    identificationNumber: values.identificationNumber,
+        const params = req.params.all();
+        if(!params.dentist_id){
+            res.status(400)
+            return res.json({
+                status:400,
+                message: 'Please provide dentist  id and try again!'
+            });
+        }
+        Patient.find({dentist_id:params.dentist_id})
+            .exec(function (err, patients) {
+                if (err) res.serverError(err);
+                const allPatients = _.map(patients, function (patient) {
+                    return (patient)
                 })
-            })
-            return res.json(allPatientData);
-        });
+                return res.json(allPatients);
+            });
 
     },
     /**
      * @function :: createPatient
      *
-     * @description :: Will create new patient store it to the database
+     * @description :: Will create new patient and the corresponding role for it and store it to the database
      * @param :: {object}
      * @returns :: {object} allPatients
      */
     createPatient: function (req, res) {
         //signup parameters
+        const {values} = req.params.all();
+        Patient.find({email: values.email})
+            .exec(function (err, patients) {
+                if (err) {
+                    return res.negotiate(err);
+                }
+                if (patients.length) {
+                    res.status(400)
+                    return res.json({
+                        status:400,
+                        message: 'Patient already exists!'
+                    });
+                } else {
 
+                    //create password salt and hash and store data in database
+                    bcrypt.genSalt(saltRounds, function (err, salt) {
+                        bcrypt.hash(values.password, salt, function (err, hash) {
+                            const patient_acc = {
+                                email: values.email,
+                                firstName: values.firstName,
+                                lastName: values.lastName,
+                                address: values.address,
+                                city: values.city,
+                                country: values.country,
+                                phoneNumber: values.phoneNumber,
+                                mobileNumber: values.mobileNumber,
+                                identificationNumber: values.identificationNumber,
+                                password: hash,
+                                password_salt: salt,
+                            }
+                            Patient.create(patient_acc, function (err, patient) {
+                                if (err) {
+                                    res.status(500)
+                                    return res.json({
+                                        status: 500,
+                                        message: err.message,
+                                    });
+                                } else {
+
+                                    return res.json({
+                                        status:200,
+                                        message: "Patient was successfully created"
+                                    });
+
+                                }
+                            });
+                        });
+                    });
+
+                }
+            });
     },
 
     /**
-     * @function :: updateUser
+     * @function :: updatePatient
      *
      * @description :: Will update the patient with specific given id and store it to the database
      * @param :: {string} id
@@ -86,13 +123,12 @@ module.exports = {
      * @returns :: {object}
      */
 
-    updateUser: function (req, res) {
-        const userId = req.params.id;
+    updatePatient: function (req, res) {
+        const patientId = req.params.id;
         const {values} = req.params.all();
         bcrypt.genSalt(saltRounds, function (err, salt) {
             bcrypt.hash(values.password, salt, function (err, hash) {
-                const updatedUser = {
-                    username: values.username,
+                const updatedPatient = {
                     email: values.email,
                     firstName: values.firstName,
                     lastName: values.lastName,
@@ -101,27 +137,23 @@ module.exports = {
                     country: values.country,
                     phoneNumber: values.phoneNumber,
                     mobileNumber: values.mobileNumber,
-                    licence: values.licence,
+                    identificationNumber: values.identificationNumber,
                     password: hash,
                     password_salt: salt,
                 }
-                User_account.update({id: userId}, updatedUser).exec(function afterwards(err, updated) {
+                Patient.update({id: patientId}, updatedPatient).exec(function afterwards(err, updated) {
 
                     if (err) {
-                        return res.negotiate(err);
-                    }
-                    User_has_role.update({user_account_id: userId}, {role_id: values.role}).exec(function afterwards(err, updated) {
-                        if (err) {
-                            return res.negotiate(err);
-                        }
-
+                        res.status(500)
                         return res.json({
-                            message: 'Dentist was successfully updated',
-                            status: 200
+                            status: 500,
+                            message: err.message,
                         });
-                    })
-
-
+                    }
+                    return res.json({
+                        status: 200,
+                        message: 'Patient was successfully updated',
+                    });
                 });
             })
         })
@@ -131,25 +163,23 @@ module.exports = {
     /**
      * @function :: deletePatient
      *
-     * @description :: Will delete user with specific given id and the role associated with that user
+     * @description :: Will delete patient with specific given id and the role associated with that patient
      * @param :: {string} id
      * @param :: {object} patientInfo
-     * @returns :: {object} deletePatientResponse
+     * @returns :: {object}
      */
 
     deletePatient: function (req, res) {
         //signup parameters
         const params = req.params.all();
-        User_has_role.destroy({user_account_id: params.id}).exec(function (err) {
-            if (err) return res.negotiate(err);
-            User_account.destroy({id: params.id}).exec(function (err) {
+            Patient.destroy({id: params.id}).exec(function (err) {
                 if (err) return res.negotiate(err);
                 return res.json({
                     status: 200,
-                    message: "user with id " + params.id + " successfuly removed"
+                    message: "patient with id " + params.id + " successfuly removed"
                 })
             })
-        })
+
 
     },
 

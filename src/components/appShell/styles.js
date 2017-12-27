@@ -17,19 +17,7 @@ const styles = theme => ({
         },
         height: '100%',
     },
-    appBar: {
-        position: 'fixed',
-        marginLeft: drawerWidth,
-        [theme.breakpoints.up('md')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-        },
 
-    },
-    navIconHide: {
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        },
-    },
     drawerHeader: theme.mixins.toolbar,
     drawerPaper: {
         width: 250,
@@ -42,14 +30,14 @@ const styles = theme => ({
     content: {
         backgroundColor: theme.palette.background.default,
         width: '100%',
-        padding: theme.spacing.unit * 3,
         height: 'calc(100% - 56px)',
-        marginTop: 156,
+        marginTop: 55,
         [theme.breakpoints.up('sm')]: {
             height: 'calc(100% - 64px)',
-            marginTop: theme.spacing.unit * 6,
+            marginTop: 60,
         },
     },
+
 });
 
 export default styles

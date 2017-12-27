@@ -114,16 +114,16 @@ class ListTableComponent extends React.Component {
                                         <TableCell>{n.firstName}</TableCell>
                                         <TableCell>{n.lastName}</TableCell>
                                         <TableCell>{n.email}</TableCell>
-                                        <TableCell>{n.licence}</TableCell>
+                                        <TableCell>{n.identificationNumber}</TableCell>
                                         <TableCell>
-                                            <Tooltip id="tooltip-icon" title="Edit this dentist" placement="bottom">
+                                            <Tooltip id="tooltip-icon" title="Edit patient" placement="bottom">
                                                 <Button  mini color="primary" aria-label="edit" onClick={() => {
                                                     editData(n)
                                                 }}>
                                                     <EditDentist/>
                                                 </Button>
                                             </Tooltip>
-                                            <Tooltip id="tooltip-icon" title="Delete this dentist" placement="bottom">
+                                            <Tooltip id="tooltip-icon" title="Delete patient" placement="bottom">
                                                 <Button  mini color="accent" aria-label="delete"
                                                         onClick={() => {
                                                            deleteData(n)

@@ -63,9 +63,9 @@ class LoginComponent extends Component {
         let message = null;
         if (this.props.login.message) {
             message = <Snackbar
-                open={true}
+                open={this.state.open}
                 message={this.props.login.message}
-                autoHideDuration={4000}
+                autoHideDuration={2000}
                 onRequestClose={this.handleRequestClose}
             />
 

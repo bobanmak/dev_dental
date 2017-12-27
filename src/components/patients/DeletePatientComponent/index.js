@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {deleteUser} from '../../../actions/dentists/index';
+import {deletePatient} from '../../../actions/patients';
 import {connect} from  'react-redux';
 
 import Dialog, {
@@ -33,15 +33,6 @@ class DeleteDentistComponent extends Component {
         this.setState({open: true})
     }
 
-    /**
-     * handleUserDelete
-     * @description Will call  deleteUser() action which will delete the user from the database
-     */
-    handleUserDelete = () =>  {
-        this.props.deleteUser(this.props.token,this.props.user.id,(callback)=>{
-            this.setState({open: false})
-        })
-    };
 
     render() {
 
@@ -68,4 +59,4 @@ class DeleteDentistComponent extends Component {
     }
 }
 
-export default connect(null, {deleteUser})(DeleteDentistComponent)
+export default connect(null, {deletePatient})(DeleteDentistComponent)

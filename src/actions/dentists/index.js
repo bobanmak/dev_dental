@@ -109,7 +109,8 @@ export function deleteUser(token, id, callback) {
         params: {
             utoken: token
         }
-    }).then((response) => callback(response))
+    }).then((response) => callback(response)).catch((error) =>callback(error.response));
+
     return {
         type: DELETE_USER,
         payload: request

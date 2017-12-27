@@ -52,13 +52,19 @@ var routes = {
     'get /api/v1/token': 'AuthController.getToken',
 
     //user account backend routes
-    'post /api/v1/register': 'User_accountController.createUser',
     'get /api/v1/users': 'User_accountController.getAllUsers',
     'get /api/v1/users/:id': 'User_accountController.getSingleAccount',
     'post /api/v1/users': 'User_accountController.createUser',
     'put /api/v1/users/:id': 'User_accountController.updateUser',
     'delete /api/v1/users/:id': 'User_accountController.deleteUser',
 
+
+    //patients routes
+    'get /api/v1/patients': 'PatientController.getAllPatients',
+    'get /api/v1/patients/:id': 'PatientController.getSinglePatient',
+    'post /api/v1/patients': 'PatientController.createPatient',
+    'put /api/v1/patients/:id': 'PatientController.updatePatient',
+    'delete /api/v1/patients/:id': 'PatientController.deletePatient',
 
     //user role related routes
     'get /api/v1/roles': 'RoleController.listRoles',
@@ -72,7 +78,11 @@ var indexRoutes = ['/',
     '/dentists',
     '/dentist/add',
     '/dentist/edit',
+    '/patients',
+    '/patient/add',
+    '/patient/edit',
     '/register',
+    '/notAllowed',
     '/page1',
     '/page2'];
 indexRoutes.forEach(function (r) {

@@ -3,8 +3,9 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {getTokenData} from './actions/account_actions'
 import {connect} from  'react-redux';
 import RouteAuth from './routes/auth/RouteAuth';
+import RouteAdmin from './routes/auth/RouteAdmin';
 import Home from './routes/Home';
-
+import NotAllowed from './routes/notAllowed'
 import {getCookie} from './utils/cookies';
 
 //auth routes
@@ -12,62 +13,74 @@ import Login from './routes/auth/Login';
 
 //my account routes
 import MyAccountComponent from './components/account/MyAccountComponent'
-import DentistListComponent from './components/dentists/DentistListComponent/DentistListComponent'
-import AddDentistComponent from './components/dentists/AddDentistComponent/AddDentistComponent'
-import EditDentistComponent from './components/dentists/EditDentistComponent/EditDentistComponent'
-import NotFound from './routes/NotFound';
 
-const PropsRoute = ({component, ...rest}) => {
-    return (
-        <Route {...rest} render={routeProps => {
-            return renderMergedProps(component, routeProps, rest);
-        }}/>
-    );
-}
+//dentist components
+import DentistListComponent from './components/dentists/DentistListComponent'
+import AddDentistComponent from './components/dentists/AddDentistComponent'
+import EditDentistComponent from './components/dentists/EditDentistComponent'
+
+//patient components
+import PatientsListComponent from './components/patients/PatientListComponent'
+import AddPatientComponent from './components/patients/AddPatientComponent'
+import EditPatientComponent from './components/patients/EditPatientComponent'
+
+import NotFound from './routes/NotFound';
 
 class AppRoutes extends Component {
     constructor(props) {
         super(props);
-        this.state = {access: true, token: "", userData:""};
+        this.state = {access: true, token: "", userData: "", isAdmin: false};
     }
 
     componentDidMount() {
         const data = getCookie('udata') ? JSON.parse(getCookie('udata')) : false;
         if (data) {
-            this.setState({access: true, token: data.token,userData:data.user_data});
+            this.setState({access: true, token: data.token, userData: data.user_data,isAdmin:true});
+            console.log(this.state)
         } else {
             this.setState({access: false});
         }
-
     }
 
     render() {
-        const {tokenData} = this.props;
-
+        const {access, userData, token,isAdmin} = this.state
         return (
             <Router>
                 <div>
                     <Switch>
                         //my account routes
-                        <RouteAuth exact canAccess={this.state.access} path="/my-account" token={this.state.token}
-                                   userData={this.state.userData}
+                        <RouteAuth exact canAccess={access} path="/my-account" token={token}
+                                   userData={userData}
                                    component={MyAccountComponent}/>
-
-                        <RouteAuth exact canAccess={this.state.access} path="/dentist/add" token={this.state.token}
-                                   userData={this.state.userData}
+                        //dentist related components
+                        <RouteAuth exact canAccess={access} path="/dentist/add" token={token}
+                                   userData={userData}
                                    component={AddDentistComponent}/>
 
-                        <RouteAuth  canAccess={this.state.access} path="/dentist/edit" token={this.state.token}  userData={this.state.userData}
-                                   component={EditDentistComponent}/>
+                        <RouteAdmin isAdmin={isAdmin} canAccess={access} path="/dentist/edit"
+                                    token={token} userData={userData}
+                                    component={EditDentistComponent}/>
 
-                        //dentist related components
-                        <RouteAuth exact canAccess={this.state.access} path="/dentists" token={this.state.token}
-                                   userData={this.state.userData}
+                        <RouteAuth exact canAccess={access} path="/dentists" token={token}
+                                   userData={userData}
                                    component={DentistListComponent}/>
+                        //patient related components
+                        <RouteAuth exact canAccess={access} path="/patients" token={token}
+                                   userData={userData}
+                                   component={PatientsListComponent}/>
+                        <RouteAuth exact canAccess={access} path="/patient/add" token={token}
+                                   userData={userData}
+                                   component={AddPatientComponent}/>
+                        <RouteAuth exact canAccess={access} path="/patient/edit" token={token}
+                                   userData={userData}
+                                   component={EditPatientComponent}/>
                         //auth routes
-                        <RouteAuth exact canAccess={this.state.access} path="/" token={this.state.token}
-                                   userData={this.state.userData}
+                        <RouteAuth exact canAccess={access} path="/" token={token}
+                                   userData={userData}
                                    component={Home}/>
+                        <RouteAuth exact canAccess={access} path="/notAllowed" token={token}
+                                   userData={userData}
+                                   component={NotAllowed}/>
                         <Route exact path="/login" component={Login}/>
                         <Route path="*" component={NotFound}/>
                     </Switch>

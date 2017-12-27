@@ -4,10 +4,10 @@ import Button from 'material-ui/Button';
 import styles from './styles'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import {withStyles} from 'material-ui/styles';
-import AddDentis from 'material-ui-icons/AddCircleOutline';
-import ViewDentist from 'material-ui-icons/Contacts';
+import AddPatient from 'material-ui-icons/AddCircleOutline';
+import ViewPatient from 'material-ui-icons/Contacts';
 import {withRouter} from 'react-router-dom'
-class DentistToolbar extends React.Component {
+class PatientToolbar extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,11 +30,11 @@ class DentistToolbar extends React.Component {
         const {classes} = this.props;
         return (
             <div className={classes.appToolbar}>
-                <Button  onClick={()=>{this.handleClick('/dentists')}} className={classes.button}  ><ViewDentist  className={classes.btnIcons}/> View All Dentist </Button>
-                <Button onClick={()=>{this.handleClick('/dentist/add')}} className={classes.button}   ><AddDentis className={classes.btnIcons}/>Add new Dentist</Button>
+                <Button  onClick={()=>{this.handleClick('/patients')}} className={classes.button}><ViewPatient  className={classes.btnIcons}/>  View all Patients</Button>
+                <Button onClick={()=>{this.handleClick('/patient/add')}} className={classes.button}><AddPatient className={classes.btnIcons}/>Add new Patient</Button>
             </div>
         );
     }
 }
 
-export default withRouter(withStyles(styles)(DentistToolbar));
+export default withRouter(withStyles(styles)(PatientToolbar));

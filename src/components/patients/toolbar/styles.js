@@ -15,7 +15,7 @@ const styles = theme => ({
     button:{
         color:grey[500],
         padding:15,
-    },
+    }
 
 });
 

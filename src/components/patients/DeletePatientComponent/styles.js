@@ -13,10 +13,6 @@ const styles = theme => ({
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },
-    insertPaper:{
-        margin: theme.spacing.unit * 2,
-        padding: theme.spacing.unit * 2,
-    }
 });
 
 export default styles;

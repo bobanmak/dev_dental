@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from  'react-redux';
-import {getAllUsers} from '../../../actions/dentists/index';
-import DeleteDentistComponent from '../DeleteDentistComponent/DeleteDentistComponent'
-import DentistToolbar from '../toolbar/index'
-import {deleteUser} from '../../../actions/dentists/index';
+import {getAllPatients,deletePatient} from '../../../actions/patients';
+import DeletePatientComponent from '../DeletePatientComponent'
+import PatientToolbar from '../toolbar/index'
+
 import {withRouter} from 'react-router-dom';
 import styles from './styles'
 
-import ListTableComponent from './DentistListTableComponent'
+import ListTableComponent from './PatientListTableComponent'
 // material-UI and styles
 
 import {withStyles} from 'material-ui/styles';
@@ -16,9 +16,9 @@ import Layout from '../../appShell/Layout'
 
 /**
  * DentistListComponent
- * @description Component for displaying all dentists related to the current application
+ * @description Component for displaying all patients related to the current application
  */
-class DentistListComponent extends Component {
+class PatientListComponent extends Component {
 
     /**
      * constructor
@@ -26,7 +26,7 @@ class DentistListComponent extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: '', data: []};
+        this.state = {user: '', token: '', openDeleteDialog: false, resMessage: '', data: [],open:true};
     }
 
     /**
@@ -34,47 +34,49 @@ class DentistListComponent extends Component {
      * @description Get Dentist data from the backend before the component is rendered
      */
     componentDidMount() {
-        const {token} = this.props
-
+        const {token,userData} = this.props
+        console.log(this.props)
         /**
          * @type {function}
          * @param {string} token
          * @description  Get All data from Dentist Reducer if token is provided
          */
-        if (token) this.props.getAllUsers(token);
+        if (token && userData.user_id) this.props.getAllPatients(token,userData.user_id);
     }
 
     /**
      * toggleCloseDialog
      * @description Will close the dialog
-     * @param {object} dentist
+     * @param {object} patient
      */
-    toggleCloseDialog=(dentist)=> {
-        this.setState({openDeleteDialog: !this.state.openDeleteDialog, user: dentist, token: this.props.token});
+    toggleCloseDialog=(patient)=> {
+        this.setState({openDeleteDialog: !this.state.openDeleteDialog, user: patient, token: this.props.token});
     }
 
     /**
      * openEditScreen
-     * @description Redirect to the edit component located in 'components/dentists/EditDentistComponent' and pass dentist data as parameter
-     * @param {object} dentist
+     * @description Redirect to the edit component located in 'components/patients/EditDentistComponent' and pass patient data as parameter
+     * @param {object} patient
      */
-    openEditScreen = (dentist) => {
+    openEditScreen = (patient) => {
         this.props.history.push({
-            pathname: '/dentist/edit',
-            state: {user: dentist}
+            pathname: '/patient/edit',
+            state: {user: patient}
         });
     }
 
     /**
      * toggleDeleteDialog
      * @description Will close the dialog
-     * @param {object} dentist
+     * @param {object} patient
      */
     toggleDeleteDialog = () => {
-        this.props.deleteUser(this.state.token, this.state.user.id, (message) => {
+        const {token,userData} = this.props
+        this.props.deletePatient(this.state.token, this.state.user.id, (message) => {
             if (message.status === 200) {
                 this.setState({resMessage: message.data.message})
-                this.props.getAllUsers(this.state.token)
+                console.log(this.state.user.id)
+                this.props.getAllPatients(token,userData.user_id)
             } else {
                 this.setState({resMessage: 'Something went wrong.Please try again later'})
             }
@@ -83,30 +85,37 @@ class DentistListComponent extends Component {
 
     }
 
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ open: false });
+    };
     /**
      * render
      * @description Render whole DentistList view
      */
     render() {
-        const {dentist,userData} = this.props;
+        const {patient,userData} = this.props;
 
         return (
             <Layout title="MyAccountComponent page" userData={userData}>
-                <DentistToolbar />
+                <PatientToolbar />
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className="col-md-12">
-                            <ListTableComponent data={dentist} order="asc" editData={this.openEditScreen}
+                            <ListTableComponent data={patient} order="asc" editData={this.openEditScreen}
                                                 deleteData={this.toggleCloseDialog} rowsPerPage={5}/>
                             {this.state.openDeleteDialog ?
-                                <DeleteDentistComponent token={this.state.token} user={this.state.user}
+                                <DeletePatientComponent token={this.state.token} user={this.state.user}
                                                         onDialogDelete={this.toggleDeleteDialog.bind(this)}
                                                         onDialogClose={this.toggleCloseDialog.bind(this)}/> : null}
                         </div>
                     </div>
                 </div>
                 {this.state.resMessage ?
-                    <Snackbar open={true} message={this.state.resMessage} autoHideDuration={4000}/> : null}
+                    <Snackbar open={this.state.open} message={this.state.resMessage}  onRequestClose={this.handleClose} autoHideDuration={2000}/> : null}
             </Layout>
         );
     }
@@ -114,11 +123,11 @@ class DentistListComponent extends Component {
 }
 /**
  * @type {function}
- * @param {object} dentist
- * @description  Return dentist data from the appropriate reducer
- * @return {object} dentist
+ * @param {object} patient
+ * @description  Return patient data from the appropriate reducer
+ * @return {object} patient
  */
-function mapStateToProps({dentist}) {
-    return {dentist}
+function mapStateToProps({patient}) {
+    return {patient}
 }
-export default withStyles(styles)(withRouter(connect(mapStateToProps, {getAllUsers, deleteUser})(DentistListComponent)))
+export default withStyles(styles)(withRouter(connect(mapStateToProps, {getAllPatients, deletePatient})(PatientListComponent)))

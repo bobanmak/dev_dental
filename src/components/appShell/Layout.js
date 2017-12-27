@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
+import {withRouter} from 'react-router-dom'
 import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import SidebarController from '../sidebar/sidebarComponent'
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
+import Header from '../header/HeaderAppComponent'
 import Hidden from 'material-ui/Hidden';
-import MenuIcon from 'material-ui-icons/Menu';
 import styles from './styles'
 class ResponsiveDrawer extends React.Component {
     state = {
@@ -16,33 +13,18 @@ class ResponsiveDrawer extends React.Component {
     };
 
     handleDrawerToggle = () => {
-        this.setState({ mobileOpen: !this.state.mobileOpen });
+        this.setState({mobileOpen: !this.state.mobileOpen});
     };
 
     render() {
-        const { classes, theme,userData } = this.props;
+        const {classes, theme, userData} = this.props;
         const drawer = (
-          <SidebarController userData={userData}  />
+            <SidebarController userData={userData}/>
         );
-
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
-                    <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton
-                                color="contrast"
-                                aria-label="open drawer"
-                                onClick={this.handleDrawerToggle}
-                                className={classes.navIconHide}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
-                               Dental App
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
+                    <Header  openDrawer={this.handleDrawerToggle} userData={userData}/>
                     <Hidden mdUp>
                         <Drawer
                             type="temporary"
@@ -84,4 +66,4 @@ ResponsiveDrawer.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withRouter(withStyles(styles, {withTheme: true})(ResponsiveDrawer));
