@@ -58,9 +58,7 @@ class AddDentistComponent extends Component {
         this.setState({[input.name]: event.target.value});
         input.onChange(event.target.value)
     };
-    handleClick = () => {
-        this.setState({open: true});
-    };
+
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -70,7 +68,7 @@ class AddDentistComponent extends Component {
 
     renderField(field) {
         return (
-            <FormControl fullWidth error={field.meta.touched && field.meta.error ? true : false}>
+            <FormControl fullWidth error={!!(field.meta.touched && field.meta.error)}>
                 <InputLabel htmlFor="amount">{field.label}</InputLabel>
                 <Input
                     fullWidth={true}
@@ -82,7 +80,7 @@ class AddDentistComponent extends Component {
     }
 
     renderSelectField = ({input, value, stValue, label, stateValue, meta: {touched, error}, children, ...custom}) => (
-        <FormControl fullWidth className={styles.formControl} error={touched && error ? true : false}>
+        <FormControl fullWidth className={styles.formControl} error={!!(touched&&error)}>
             <InputLabel htmlFor="role">{label}</InputLabel>
             <Select
                 value={stValue}

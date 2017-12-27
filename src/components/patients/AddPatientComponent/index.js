@@ -129,7 +129,7 @@ class AddPatientComponent extends Component {
                     </IconButton>,
                 ]}
             />
-            if (patient.status != 500 && patient.status != 400) {
+            if (patient.status !== 500 && patient.status !== 400) {
                 setTimeout(function () {
                     history.push('/patients')
                 }.bind(this), 1000);
