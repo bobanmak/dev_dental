@@ -91,6 +91,9 @@
 	"scripts": {
 		"debug": "NODE_ENV=dev node debug app.js",
 		"dev": "NODE_ENV=dev npm run build:dev; npm run server:dev",
+		"dev-win": "set NODE_ENV=dev && npm run build:dev-win && npm run server:dev-win",	
+		"build:dev-win": "set NODE_ENV=dev-win && node node_modules/webpack/bin/webpack.js --progress",		
+		"server:dev-win": "set NODE_ENV=dev-win && sails lift",		
 		"prod": "NODE_ENV=dev npm run build:prod; npm run server:prod",
 		"server:dev": "NODE_ENV=dev sails lift",
 		"server:prod": "NODE_ENV=prod node app.js",
