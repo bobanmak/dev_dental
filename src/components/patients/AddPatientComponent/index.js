@@ -22,9 +22,10 @@ import styles from './styles';
 import {FormControl, FormHelperText} from 'material-ui/Form';
 import Input, {InputLabel} from 'material-ui/Input';
 import {MenuItem} from 'material-ui/Menu';
+import AutoCompleteComponent from '../../utils/autocomplete'
 /**
  * AddDentistComponent
- * @description Component with form for adding new dentsits
+ * @description Component with form for adding new patients
  */
 class AddPatientComponent extends Component {
     /**
@@ -50,16 +51,13 @@ class AddPatientComponent extends Component {
      */
     componentDidMount() {
         this.setState({countries: COUNTRIES_LIST})
-        this.props.getUserRoles();
     }
 
     handleChange = input => event => {
         this.setState({[input.name]: event.target.value});
         input.onChange(event.target.value)
     };
-    handleClick = () => {
-        this.setState({open: true});
-    };
+
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -80,6 +78,16 @@ class AddPatientComponent extends Component {
         )
     }
 
+    renderAutoField = ({input, value, stValue, label, stateValue, meta: {touched, error}, children, ...custom}) => (
+        <FormControl fullWidth className={styles.formControl} error={touched && error ? true : false}>
+            <InputLabel htmlFor="role">{label}</InputLabel>
+            <AutoCompleteComponent value={stValue}
+                                   onChange={this.handleChange(input)}
+                                   children={children}
+                                   {...custom} />
+            <FormHelperText>{touched && error}</FormHelperText>
+        </FormControl>
+    )
     renderSelectField = ({input, value, stValue, label, stateValue, meta: {touched, error}, children, ...custom}) => (
         <FormControl fullWidth className={styles.formControl} error={touched && error ? true : false}>
             <InputLabel htmlFor="role">{label}</InputLabel>
@@ -99,14 +107,14 @@ class AddPatientComponent extends Component {
     }
 
     onSubmit(values) {
-
-        this.props.addPatient(this.props.token, values);
-        this.setState({open: true})
+        console.log(values)
+        //this.props.addPatient(this.props.token, values);
+        //this.setState({open: true})
     }
 
     render() {
-        const {handleSubmit, classes,patient,userData,history} = this.props;
-        const{country,countries,open} = this.state
+        const {handleSubmit, classes, patient, userData, history} = this.props;
+        const {country, countries, open} = this.state
         let message = null;
         if (patient.message) {
             message = <Snackbar
@@ -136,7 +144,7 @@ class AddPatientComponent extends Component {
             }
         }
         return (
-            <Layout  userData={userData}>
+            <Layout userData={userData}>
                 <PatientToolbar />
                 <div className={classes.root}>
                     <Paper className={classes.insertPaper} elevation={4}>
@@ -205,6 +213,14 @@ class AddPatientComponent extends Component {
                                         hint="Enter patient Identification Number"
                                         component={this.renderField}/>
                                 </Grid>
+                                <Grid item xs={6} sm={6}>
+                                    <Field
+                                        label="Assign Dentist"
+                                        name="dentistD"
+
+                                        hint="Enter patient Identification Number"
+                                        component={this.renderAutoField}/>
+                                </Grid>
                             </Grid>
                             <Button raised type="submit" color="primary"> Add new Patient </Button>
                         </form>
@@ -231,32 +247,22 @@ function validate(values) {
         errors.email = "Please enter email";
     }
 
-    if (values.password) {
-        if (!validator.isLength(values.password, {min: 8, max: 15})) {
-            errors.password = 'Password must be at least 8 characters'
-        }
-    }
-    if (!values.password) {
-        errors.password = "Please enter password";
-    }
-    if (values.licence) {
-        if (!validator.isLength(values.licence, {min: 6, max: 6})) {
-            errors.licence = 'Licence number must be exact 6 numbers'
-            if (!validator.isInt(values.licence)) {
-                errors.licence = 'Licence number must contain only numbers'
+    if (values.identificationNumber) {
+        if (!validator.isLength(values.identificationNumber, {min: 6, max: 6})) {
+            errors.identificationNumber = 'Identificatio number must be exact 6 numbers'
+            if (!validator.isInt(values.identificationNumber)) {
+                errors.identificationNumber = 'Identificatio number must contain only numbers'
             }
         }
     }
-    if (!values.licence) {
-        errors.licence = "Please enter Licence Number";
+    if (!values.identificationNumber) {
+        errors.identificationNumber = "Please enter Licence Number";
     }
-    if (!values.role) {
-        errors.role = "Please provide role for this user";
-    }
+
     //if errors is !empty there is something wrong
     return errors;
 }
-function mapStateToProps({ patient}) {
+function mapStateToProps({patient}) {
     return {patient}
 }
 export default withStyles(styles)(withRouter(reduxForm({

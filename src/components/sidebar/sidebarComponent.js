@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
-
+import _ from 'underscore'
 import {withStyles} from 'material-ui/styles';
 import ListSubheader from 'material-ui/List/ListSubheader';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
@@ -22,32 +22,36 @@ class sidebarComponent extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = {open: true,isAdmin:true,isUser:true,isPatient:false};
+        this.state = {open: true, isAdmin: true, isUser: true, isPatient: true};
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const {userData} = this.props
-        if(userData){
-            switch (userData.role_id){
-                case 1 :
-                    this.setState({isAdmin:false})
-                    break;
-                case 2:
-                    this.setState({isPatient:false})
-                    break;
-                case 3:
-                    this.setState({isUser:false})
-                    break;
+        if (userData) {
+            if (_.contains(userData.roles, 'isAdmin')) {
+
+                this.setState({isAdmin: false})
+
+            } else if (_.contains(userData.roles, 'isPatient')) {
+
+                this.setState({isPatient: false})
+
+            } else if (_.contains(userData.roles, 'isUser')) {
+
+                this.setState({isUser: false})
+
             }
+
         }
     }
+
     /**
      * handleClick
      * @description Will redirect to the correct path using the react-router WithRouter history method
      * @param value The path in which you want to redirect the user to
      */
     handleClick(value) {
-        this.setState({ open: !this.state.open });
+        this.setState({open: !this.state.open});
         if (value) {
             this.props.history.push(value);
         }

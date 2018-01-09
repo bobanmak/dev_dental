@@ -9,7 +9,7 @@ import PatientToolbar from '../toolbar'
 import {COUNTRIES_LIST} from '../../../utils/countries'
 import {withRouter} from 'react-router-dom'
 // material-UI and styles
-
+import AutoCompleteComponent from '../../utils/autocomplete'
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
@@ -49,6 +49,16 @@ class EditPatientComponent extends Component {
                     fullWidth={true}
                     {...field.input}
                 />
+                <FormHelperText>{field.meta.touched ? field.meta.error : ""}</FormHelperText>
+            </FormControl>
+        )
+    }
+
+    renderAutoField(field) {
+        return (
+            <FormControl fullWidth error={field.meta.touched && field.meta.error ? true : false}>
+                <InputLabel htmlFor="amount">{field.label}</InputLabel>
+                <AutoCompleteComponent />
                 <FormHelperText>{field.meta.touched ? field.meta.error : ""}</FormHelperText>
             </FormControl>
         )
@@ -168,6 +178,13 @@ class EditPatientComponent extends Component {
                                         hint="Enter patient Identification Number"
                                         component={this.renderField}/>
                                 </Grid>
+                                <Grid item xs={6} sm={6}>
+                                    <Field
+                                        label="Unique Identification Number"
+                                        name="identificationNumber"
+                                        hint="Enter patient Identification Number"
+                                        component={this.renderAutoField}/>
+                                </Grid>
                             </Grid>
                             <Button raised type="submit" color="primary"> Edit Patient </Button>
                         </form>
@@ -207,9 +224,7 @@ function validate(values) {
     if (!values.identificationNumber) {
         errors.identificationNumber = "Please enter Licence Number";
     }
-    if (!values.role) {
-        errors.role = "Please provide role for this user";
-    }
+
     //if errors is !empty there is something wrong
     return errors;
 }

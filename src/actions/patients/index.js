@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const GET_SINGLE_PATIENT = 'get_single_user';
+export const GET_SINGLE_PATIENT = 'get_single_patient';
 export const GET_ALL_PATIENTS = 'get_all_patients';
 export const ADD_PATIENT = 'add_patient';
 export const UPDATE_PATIENT = 'update_patient';
@@ -9,7 +9,7 @@ export const DELETE_PATIENT = 'delete_patient';
 /**
  * @function :: getSinglePatient
  *
- * @description :: Redux action for calling backend API /api/v1/users/:id which will get single user with given id
+ * @description :: Redux action for calling backend API /api/v1/patients/:id which will get single patient with given id
  * @param :: {number} id
  * @param :: {string} token
  * @returns :: {object} GET_SINGLE_PATIENT
@@ -21,16 +21,20 @@ export function getSinglePatient(token, id) {
             utoken: token
         }
     })
-    return {
-        type: GET_SINGLE_PATIENT,
-        payload: request
+    return (dispatch) => {
+        request.then(({data}) => {
+            dispatch({type: GET_SINGLE_PATIENT, payload: data})
+        }).catch((error) => {
+
+            dispatch({type: GET_SINGLE_PATIENT, payload: error.response, status: error.response.status})
+        });
     }
 }
 
 /**
  * @function :: getAllPatients
  *
- * @description :: Redux action for calling backend API /api/v1/users which will get all users
+ * @description :: Redux action for calling backend API /api/v1/patients which will get all patients
  * @param :: {number} id
  * @param :: {string} token
  * @returns :: {object} GET_SINGLE_PATIENT
@@ -45,7 +49,6 @@ export function getAllPatients(token,dentist) {
     })
     return (dispatch) => {
         request.then(({data}) => {
-            console.log(data)
             dispatch({type: GET_ALL_PATIENTS, payload: data})
         }).catch((error) => {
             dispatch({type: GET_ALL_PATIENTS, payload: error.response, status: error.response.status})
@@ -56,7 +59,7 @@ export function getAllPatients(token,dentist) {
 /**
  * @function :: getAllPatients
  *
- * @description :: Redux action for sending user data in  backend API /api/v1/users/ which will add new user to the database
+ * @description :: Redux action for sending user data in  backend API /api/v1/patients/ which will add new patient to the database
  * @param :: {object} values
  * @param :: {string} token
  * @returns :: {object} ADD_PATIENT
@@ -82,7 +85,7 @@ export function addPatient(token, values) {
 /**
  * @function :: updatePatient
  *
- * @description :: Redux action for sending user data in  backend API /api/v1/users/:id which will update user with given api
+ * @description :: Redux action for sending user data in  backend API /api/v1/patients/:id which will update patient with given api
  * @param :: {object} values
  * @param :: {string} token
  * @param :: {number} id
@@ -103,7 +106,7 @@ export function updatePatient(token, values, id) {
 /**
  * @function :: deletePatient
  *
- * @description :: Redux action for deleting  user  in  backend API delete call /api/v1/users/:id
+ * @description :: Redux action for deleting  user  in  backend API delete call /api/v1/patients/:id
  * @param :: {string} token
  * @param :: {number} id
  * @returns :: {object} DELETE_PATIENT

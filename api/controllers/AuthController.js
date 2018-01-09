@@ -4,9 +4,9 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-const saltRounds = 10;
+let bcrypt = require('bcrypt');
+let jwt = require('jsonwebtoken');
+let _ = require ('underscore')
 module.exports = {
     login: function (req, res) {
         const params = req.params.all();
@@ -33,28 +33,41 @@ module.exports = {
                 }
                 bcrypt.compare(params.password, users[0].password).then((stat) => {
                     if (stat == true) {
+                        let roles=[]
+                        _.map(users[0].user_role, function(role){
+                            switch (role.role_id){
+                                case 1:
+                                    roles.push('isAdmin')
+                                    break;
+                                case 2:
+                                    roles.push('isDentist')
+                                    break;
+                                case 3:
+                                    roles.push('isUser')
+                                    break;
+                            }
 
+                        });
                         const logged_in = {
                             user_id: users[0].id,
-                            role_id: users[0].user_role[0].role_id,
+                            roles: roles,
                             username: users[0].username,
                             email: users[0].email
                             //user_status:user.status.status_id
                         };
                         let token = jwt.sign(logged_in, sails.config.api_config.secret_key);
+
                         return res.send({
                             message: "Dentist was successfully logged in",
                             logged_in: true,
                             user_data:{
                                 user_id: users[0].id,
-                                role_id:  users[0].user_role[0].role_id,
+                                roles: roles,
                                 firstName: users[0].firstName,
                                 lastName: users[0].lastName,
                                 email: users[0].email,
                                 licence: users[0].licence
                             },
-                            user_id: users[0].id,
-                            role_id: users[0].user_role[0].role_id,
                             token: token
                         });
 

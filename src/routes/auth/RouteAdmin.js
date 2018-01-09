@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import _ from 'underscore'
 import {Route, Redirect} from 'react-router-dom'
 
 /**
@@ -31,7 +32,7 @@ class RouteAdmin extends Component {
             exact,
             strict
         }
-        console.log(isAdmin)
+
         return canAccess && isAdmin ?  <Route component={ () => {
                 return renderMergedProps(component,this.props);
     }}/> : <Redirect to="/notAllowed" />

@@ -20,8 +20,14 @@ module.exports = {
         const params = req.params.all();
         Patient.find({id: params.id})
             .exec(function (err, patients) {
-                if (err) res.serverError(err);
-                return res.json(patients);
+                if (err) {
+                    res.status(500)
+                    return res.json({
+                        status: 500,
+                        message: err.message,
+                    });
+                }
+                return res.json(patients[0]);
             });
 
     },

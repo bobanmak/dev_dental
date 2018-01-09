@@ -8,16 +8,17 @@
  *
  */
 const jwt = require('jsonwebtoken');
-
+const _ = require ('underscore')
 module.exports = function (req, res, next) {
 
     const params = req.params.all();
     const jwttoken = params.utoken;
     var decoded = jwt.verify(jwttoken, sails.config.api_config.secret_key);
-    console.log(decoded)
+
     // User is allowed, proceed to the next policy,
     // or if this is the last policy, the controller
-    if (decoded && decoded.role_id==1) {
+    if (decoded && _.contains(decoded.roles, 'isAdmin')) {
+        console.log('isAdmin')
         return next();
     }
 

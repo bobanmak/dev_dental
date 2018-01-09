@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import keycode from 'keycode';
 import { CircularProgress } from 'material-ui/Progress';
 import _ from 'underscore';
 import Table, {
@@ -12,8 +11,9 @@ import Table, {
 } from 'material-ui/Table';
 
 import Paper from 'material-ui/Paper';
-import EditDentist from 'material-ui-icons/ModeEdit';
-import DeleteDentis from 'material-ui-icons/Clear';
+import EditPatient from 'material-ui-icons/ModeEdit';
+import DeletePatient from 'material-ui-icons/Clear';
+import ViewProfile from 'material-ui-icons/AccountCircle';
 import TblHeaderComponent from './TblHeaderComponent'
 import EnhancedTableToolbar from './TblToolbarComponent'
 import Button from 'material-ui/Button';
@@ -85,7 +85,7 @@ class ListTableComponent extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const {data,editData,deleteData} = this.props
+        const {data,editData,viewPatientProfile,deleteData} = this.props
         if (_.isEmpty(data) ||!(0 in data)){
            return  <CircularProgress className={classes.progress} size={50} />
         }
@@ -104,7 +104,6 @@ class ListTableComponent extends React.Component {
                         />
                         <TableBody>
                             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-
                                 return (
                                     <TableRow
                                         hover
@@ -120,7 +119,7 @@ class ListTableComponent extends React.Component {
                                                 <Button  mini color="primary" aria-label="edit" onClick={() => {
                                                     editData(n)
                                                 }}>
-                                                    <EditDentist/>
+                                                    <EditPatient/>
                                                 </Button>
                                             </Tooltip>
                                             <Tooltip id="tooltip-icon" title="Delete patient" placement="bottom">
@@ -129,7 +128,16 @@ class ListTableComponent extends React.Component {
                                                            deleteData(n)
                                                         }}
                                                 >
-                                                    <DeleteDentis/>
+                                                    <DeletePatient/>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip id="tooltip-icon" title="View patient profile" placement="bottom">
+                                                <Button  mini color="primary" aria-label="delete"
+                                                         onClick={() => {
+                                                             viewPatientProfile(n.id)
+                                                         }}
+                                                >
+                                                    <ViewProfile/>
                                                 </Button>
                                             </Tooltip>
                                         </TableCell>

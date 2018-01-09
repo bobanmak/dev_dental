@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {getTokenData} from './actions/account_actions'
 import {connect} from  'react-redux';
+import _ from 'underscore'
 import RouteAuth from './routes/auth/RouteAuth';
 import RouteAdmin from './routes/auth/RouteAdmin';
 import Home from './routes/Home';
@@ -23,20 +24,24 @@ import EditDentistComponent from './components/dentists/EditDentistComponent'
 import PatientsListComponent from './components/patients/PatientListComponent'
 import AddPatientComponent from './components/patients/AddPatientComponent'
 import EditPatientComponent from './components/patients/EditPatientComponent'
+import PatientProfileComponent from './components/patients/PatientProfileComponent'
+
 
 import NotFound from './routes/NotFound';
 
 class AppRoutes extends Component {
     constructor(props) {
         super(props);
-        this.state = {access: true, token: "", userData: "", isAdmin: false};
+        this.state = {access: true, token: "", userData: "", isAdmin: true};
     }
 
     componentDidMount() {
         const data = getCookie('udata') ? JSON.parse(getCookie('udata')) : false;
         if (data) {
-            this.setState({access: true, token: data.token, userData: data.user_data,isAdmin:true});
-            console.log(this.state)
+            this.setState({access: true, token: data.token, userData: data.user_data});
+            if(!_.contains(data.user_data.roles, 'isAdmin')){
+                this.setState({isAdmin: false})
+            }
         } else {
             this.setState({access: false});
         }
@@ -44,6 +49,7 @@ class AppRoutes extends Component {
 
     render() {
         const {access, userData, token,isAdmin} = this.state
+
         return (
             <Router>
                 <div>
@@ -53,11 +59,11 @@ class AppRoutes extends Component {
                                    userData={userData}
                                    component={MyAccountComponent}/>
                         //dentist related components
-                        <RouteAuth exact canAccess={access} path="/dentist/add" token={token}
+                        <RouteAdmin exact isAdmin={isAdmin} canAccess={access} path="/dentist/add" token={token}
                                    userData={userData}
                                    component={AddDentistComponent}/>
 
-                        <RouteAdmin isAdmin={isAdmin} canAccess={access} path="/dentist/edit"
+                        <RouteAdmin exact isAdmin={isAdmin} canAccess={access} path="/dentist/edit"
                                     token={token} userData={userData}
                                     component={EditDentistComponent}/>
 
@@ -74,6 +80,9 @@ class AppRoutes extends Component {
                         <RouteAuth exact canAccess={access} path="/patient/edit" token={token}
                                    userData={userData}
                                    component={EditPatientComponent}/>
+                        <RouteAuth exact canAccess={access} path="/patient/:id" token={token}
+                                   userData={userData}
+                                   component={PatientProfileComponent}/>
                         //auth routes
                         <RouteAuth exact canAccess={access} path="/" token={token}
                                    userData={userData}

@@ -16,12 +16,3 @@ export function  userLogin(values){
     }
 }
 
-export function  userRegister(values){
-    console.log(values)
-    const request= axios.post('/api/v1/register',values);
-    return {
-        type: USER_REGISTER,
-        payload: request
-    }
-}
-
